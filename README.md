@@ -2,7 +2,7 @@
 
 ### This is an ongoing Full-Stack (MERN) project. Functionalities and proper documentation will be added soon.
 
-## Tech Stack will be used:
+### Tech Stack will be used:
 
 ### Frontend - Styled-Components, React.js, Redux, Redux-Toolkit, and TypeScript
 ### Backend - Node.js, Express.js, and TypeScript
