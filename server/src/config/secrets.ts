@@ -6,7 +6,8 @@ const dev = {
     url: process.env.MONGODB_URI || '',
   },
   app: {
-    port: process.env.SERVER_PORT || 3004,
+    port: process.env.SERVER_PORT || 4004,
+    client_url: process.env.CLIENT_URL,
   },
 };
 
