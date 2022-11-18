@@ -15,7 +15,7 @@ export const successResponse = (
   res: Response,
   statusCode: number,
   message: string,
-  data?: object | string,
+  data: object | string | [],
 ) => {
   return res.status(statusCode).send({
     success: true,
