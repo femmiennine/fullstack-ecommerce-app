@@ -13,7 +13,7 @@ import {
   Footer,
 } from '../pages/index'
 
-const index = () => {
+const Index = () => {
   return (
     <BrowserRouter>
       <Announcement />
@@ -34,4 +34,4 @@ const index = () => {
     </BrowserRouter>
   )
 }
-export default index
+export default Index

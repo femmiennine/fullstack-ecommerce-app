@@ -56,8 +56,8 @@ export const updateUser = async (req: Request, res: Response) => {
 //GET Register a User http://localhost:4000/api/v1/users/register
 export const registerUser = async (req: Request, res: Response) => {
   try {
-    const { name, email, password, phone } = req.body;
-    if (!name || !email || !phone || !password) {
+    const { firstname, lastname, email, password, phone } = req.body;
+    if (!firstname || !lastname || !email || !phone || !password) {
       return errorResponse(
         res,
         400,
@@ -77,7 +77,8 @@ export const registerUser = async (req: Request, res: Response) => {
     }
     const hashPassword = await hashedPassword(password);
     const newUser = new User({
-      name,
+      firstname,
+      lastname,
       email,
       phone,
       password: hashPassword,
@@ -89,7 +90,12 @@ export const registerUser = async (req: Request, res: Response) => {
       return errorResponse(res, 400, `User unsucessfully registered!`);
     }
     if (userData) {
-      sendVerificationEmail(userData.email, userData.name, userData._id);
+      sendVerificationEmail(
+        userData.email,
+        userData.firstname,
+        userData.lastname,
+        userData._id,
+      );
       return successResponse(
         res,
         201,

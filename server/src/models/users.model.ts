@@ -1,18 +1,25 @@
 import mongoose, { Document } from 'mongoose';
 
 export type UserDocument = Document & {
-  name: string;
+  firstname: string;
+  lastname: string;
   email: string;
   phone: string;
   password: string;
-  image: string;
   isAdmin: number;
   isVerified: number;
   token: string;
 };
 
 const userSchema = new mongoose.Schema({
-  name: {
+  firstname: {
+    type: String,
+    required: [true, 'Please enter your name'],
+    maxLength: [30, 'Name cannot exceed 30 characters'],
+    trim: true,
+  },
+
+  lastname: {
     type: String,
     required: [true, 'Please enter your name'],
     maxLength: [30, 'Name cannot exceed 30 characters'],
@@ -34,10 +41,6 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, 'Please enter your password'],
     minLength: [8, 'Password should be greater than 8 characters'],
-  },
-
-  image: {
-    type: String,
   },
 
   isVerified: {

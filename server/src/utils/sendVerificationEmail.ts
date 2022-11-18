@@ -3,7 +3,8 @@ import dev from '../config/secrets';
 
 export const sendVerificationEmail = async (
   email: string,
-  name: string,
+  firstname: string,
+  lastname: string,
   _id: any,
 ) => {
   try {
@@ -21,7 +22,7 @@ export const sendVerificationEmail = async (
       from: dev.app.auth_email,
       to: email,
       subject: 'Verification Email',
-      html: `<p> Welcome ${name}! <a href="http://localhost:3000/verify-user/${_id}"> Click for email verification </a> </p>`,
+      html: `<p> Welcome ${firstname} ${lastname}! <a href="http://localhost:3000/verify-user/${_id}"> Click for email verification </a> </p>`,
     };
 
     await transporter.sendMail(mailOptions, (error, info) => {

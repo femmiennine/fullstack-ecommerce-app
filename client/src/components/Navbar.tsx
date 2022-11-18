@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 import { Badge } from '@material-ui/core'
 import { Search, ShoppingCartOutlined } from '@material-ui/icons'
 import { mobile } from '../utils/responsive'
@@ -60,6 +61,7 @@ const Right = styled.div`
 
 const MenuItem = styled.div`
   font-size: 14px;
+  font-weight: bold;
   cursor: pointer;
   margin-left: 25px;
   ${mobile({ fontSize: '12px', marginLeft: '10px' })}
@@ -80,14 +82,25 @@ const Navbar = () => {
           <Logo>BABY ON BOARD.</Logo>
         </Center>
         <Right>
-          <MenuItem>PRODUCTS</MenuItem>
-          <MenuItem>REGISTER</MenuItem>
-          <MenuItem>SIGN IN</MenuItem>
-          <MenuItem>
-            <Badge badgeContent={4} color='primary'>
-              <ShoppingCartOutlined />
-            </Badge>
-          </MenuItem>
+          <Link style={{ textDecoration: 'none', color: 'teal' }} to='/'>
+            <MenuItem>HOME</MenuItem>
+          </Link>
+          <Link style={{ textDecoration: 'none', color: 'teal' }} to='/products'>
+            <MenuItem>PRODUCTS</MenuItem>
+          </Link>
+          <Link style={{ textDecoration: 'none', color: 'teal' }} to='/register'>
+            <MenuItem>SIGN UP</MenuItem>
+          </Link>
+          <Link style={{ textDecoration: 'none', color: 'teal' }} to='/login'>
+            <MenuItem>LOGIN</MenuItem>
+          </Link>
+          <Link style={{ textDecoration: 'none', color: 'teal' }} to='/cart'>
+            <MenuItem>
+              <Badge badgeContent={4} color='primary'>
+                <ShoppingCartOutlined />
+              </Badge>
+            </MenuItem>
+          </Link>
         </Right>
       </Wrapper>
     </Container>
