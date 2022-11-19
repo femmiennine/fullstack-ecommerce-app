@@ -1,19 +1,32 @@
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import error from '../images/error.jpg'
-const Error = () => {
-  const Container = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  `
-  const Image = styled.img`
-    width: 45%;
-    height: 45%;
-  `
 
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 0;
+`
+const Image = styled.img`
+  width: 40%;
+  height: 40%;
+`
+
+const Homepage = styled.h3`
+  display: flex;
+  gap: 5px;
+`
+
+const Error = () => {
   return (
     <Container>
       <Image src={error} alt='404 error robot' />
+      <Homepage>
+        GO BACK TO
+        <Link to='/'>HOMEPAGE</Link>
+      </Homepage>
     </Container>
   )
 }

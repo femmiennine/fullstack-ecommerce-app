@@ -6,13 +6,13 @@ import { verifyUser } from '../../services/userServices'
 import { VerifyUserType } from '../../types/index'
 import { validationSchema } from '../../validator/verifyUser.schema'
 import { mobile } from '../../utils/responsive'
+import verify from '../../images/verify.jpg'
 
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
   background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)),
-    url('https://images.pexels.com/photos/6984650/pexels-photo-6984650.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940')
-      center;
+    url(${verify}) center;
   background-size: cover;
   display: flex;
   align-items: center;

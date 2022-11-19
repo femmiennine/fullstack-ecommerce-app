@@ -6,13 +6,13 @@ import { registerUser } from '../../services/userServices'
 import { UserRegister } from '../../types'
 import { mobile } from '../../utils/responsive'
 import { validationSchema } from '../../validator/registration.schema'
-import nursery from '../../images/nurseryroom.jpg'
+import register from '../../images/register.jpg'
 
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
   background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)),
-    url(${nursery}) center;
+    url(${register}) center;
   background-size: cover;
   display: flex;
   align-items: center;

@@ -5,6 +5,7 @@ import { comparePassword, hashedPassword } from '../helper/password';
 import { errorResponse, successResponse } from '../helper/responseHandler';
 import { sendVerificationEmail } from '../utils/sendVerificationEmail';
 import dev from '../config/secrets';
+import { sendResetPasswordEmail } from '../utils/sendResetPasswordEmail';
 
 //GET all data of Users http://localhost:4000/api/v1/users
 export const getAllUsers = async (req: Request, res: Response) => {
@@ -131,9 +132,7 @@ export const verifyUser = async (req: Request, res: Response) => {
       return errorResponse(res, 400, `User verification unsuccessfu!`);
     }
   } catch (error: any) {
-    res.status(500).send({
-      message: error.message,
-    });
+    return errorResponse(res, 500, error.message);
   }
 };
 
@@ -177,8 +176,43 @@ export const loginUser = async (req: Request, res: Response) => {
     });
     return successResponse(res, 200, `User successfully login`, token);
   } catch (error: any) {
-    return res.status(500).send({
-      message: error.message,
+    return errorResponse(res, 500, error.message);
+  }
+};
+
+//POST Forget Password http://localhost:4000/api/v1/users/forget-password
+export const forgetPassword = async (req: Request, res: Response) => {
+  try {
+    const email = req.body.email;
+    const user = await User.findOne({ email: email });
+    const token = jwt.sign({ id: user?._id }, String(dev.app.jwt), {
+      algorithm: 'HS256',
+      expiresIn: '45s',
     });
+    if (user) {
+      if (user.isVerified) {
+        await User.updateOne(
+          { email: email },
+          {
+            $set: {
+              token: token,
+            },
+          },
+        );
+        sendResetPasswordEmail(user.firstname, user.lastname, user.email);
+        return successResponse(
+          res,
+          201,
+          `Check your email to reset password`,
+          '',
+        );
+      } else {
+        return errorResponse(res, 400, `Verify your email address`);
+      }
+    } else {
+      return errorResponse(res, 404, `This user does not exist`);
+    }
+  } catch (error: any) {
+    return errorResponse(res, 500, error.message);
   }
 };

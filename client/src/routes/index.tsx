@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { Announcement } from '../components'
+import { Announcement, Navbar } from '../components'
 import {
   Home,
   Login,
@@ -9,7 +9,6 @@ import {
   ForgetPassword,
   ResetPassword,
   Error,
-  Navbar,
   Footer,
 } from '../pages/index'
 

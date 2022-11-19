@@ -8,13 +8,13 @@ import { validationSchema } from '../../validator/login.schema'
 import { UserLogin } from '../../types/index'
 import { loginUser } from '../../services/userServices'
 import { mobile } from '../../utils/responsive'
+import signin from '../../images/signin.jpg'
 
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
   background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)),
-    url('https://images.pexels.com/photos/6984650/pexels-photo-6984650.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940')
-      center;
+    url(${signin}) center;
   background-size: cover;
   display: flex;
   align-items: center;
@@ -100,7 +100,7 @@ const Login = () => {
           />
           <Button type='submit'>LOGIN</Button>
           {/* {error && <Error></Error>} */}
-          <Link to='/foreget-password' style={{ textDecoration: 'none', color: 'teal' }}>
+          <Link to='/forget-password' style={{ textDecoration: 'none', color: 'teal' }}>
             <Line>FORGET PASSWORD?</Line>
           </Link>
           <Link to='/register' style={{ textDecoration: 'none', color: 'teal' }}>

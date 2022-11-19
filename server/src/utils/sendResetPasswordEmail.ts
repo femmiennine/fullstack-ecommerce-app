@@ -2,9 +2,9 @@ import nodemailer from 'nodemailer';
 import dev from '../config/secrets';
 
 export const sendResetPasswordEmail = async (
-  name: string,
+  firstname: string,
+  lastname: string,
   email: string,
-  token: string,
 ) => {
   try {
     const transporter = nodemailer.createTransport({
@@ -21,7 +21,7 @@ export const sendResetPasswordEmail = async (
       from: dev.app.auth_email,
       to: email,
       subject: 'Reset Account Password Link',
-      html: `<p>Hi ${name}, please click the link below to reset your password</p> <b/> 
+      html: `<p>Hi ${firstname} ${lastname}! Kindly click the link below to reset your password</p> <b/> 
             <a href="http://localhost:3000/reset-password"> Please reset your password </a>`,
     };
 
