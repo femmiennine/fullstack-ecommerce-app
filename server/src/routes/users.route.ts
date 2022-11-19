@@ -4,6 +4,7 @@ import {
   deleteUser,
   updateUser,
   registerUser,
+  loginUser,
 } from '../controllers/users.controller';
 import upload from '../middleware/fileUpload';
 import { registerUserValidator } from '../validator/user.validator';
@@ -18,5 +19,6 @@ router.post(
   registerUserValidator,
   registerUser,
 );
+router.post('/login', loginUser);
 
 export default router;

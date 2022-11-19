@@ -1,8 +1,10 @@
 import { Request, Response } from 'express';
+import jwt from 'jsonwebtoken';
 import User from '../models/users.model';
-import { hashedPassword } from '../helper/password';
+import { comparePassword, hashedPassword } from '../helper/password';
 import { errorResponse, successResponse } from '../helper/responseHandler';
 import { sendVerificationEmail } from '../utils/sendVerificationEmail';
+import dev from '../config/secrets';
 
 //GET all data of Users http://localhost:4000/api/v1/users
 export const getAllUsers = async (req: Request, res: Response) => {
@@ -53,7 +55,7 @@ export const updateUser = async (req: Request, res: Response) => {
   }
 };
 
-//GET Register a User http://localhost:4000/api/v1/users/register
+//POST Register a User http://localhost:4000/api/v1/users/register
 export const registerUser = async (req: Request, res: Response) => {
   try {
     const { firstname, lastname, email, password, phone } = req.body;
@@ -83,6 +85,7 @@ export const registerUser = async (req: Request, res: Response) => {
       phone,
       password: hashPassword,
       isAdmin: 0,
+      isVerified: 0,
       image: req.file?.filename,
     });
     const userData = await newUser.save();
@@ -107,5 +110,51 @@ export const registerUser = async (req: Request, res: Response) => {
     }
   } catch (error: any) {
     return errorResponse(res, 500, error.message);
+  }
+};
+
+//POST Login User http://localhost:4000/api/v1/users/login
+export const loginUser = async (req: Request, res: Response) => {
+  try {
+    const { email, password } = req.body;
+    if (!(email && password)) {
+      return errorResponse(res, 400, `Please provide both email and password`);
+    }
+
+    const user = await User.findOne({ email: email });
+    if (!user) {
+      return errorResponse(
+        res,
+        404,
+        `No user exist with this email and password`,
+      );
+    }
+    if (user.isVerified === 0) {
+      return errorResponse(
+        res,
+        400,
+        `Please verify your email address before login`,
+      );
+    }
+    const isPasswordMatched = await comparePassword(password, user.password);
+    if (!isPasswordMatched) {
+      return errorResponse(res, 406, `Invalid Credentials`);
+    }
+    const token = jwt.sign({ id: user._id }, String(dev.app.jwt), {
+      algorithm: 'HS256',
+      expiresIn: '1d',
+    });
+    console.log(token);
+    res.cookie(String(user._id), token, {
+      path: '/',
+      expires: new Date(Date.now() + 1000 * 200),
+      httpOnly: true,
+      sameSite: 'lax',
+    });
+    return successResponse(res, 200, `User successfully login`, token);
+  } catch (error: any) {
+    return res.status(500).send({
+      message: error.message,
+    });
   }
 };
