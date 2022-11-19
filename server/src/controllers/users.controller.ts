@@ -113,6 +113,30 @@ export const registerUser = async (req: Request, res: Response) => {
   }
 };
 
+//POST Verify User http://localhost:4000/api/v1/users/verify-user
+export const verifyUser = async (req: Request, res: Response) => {
+  try {
+    const email = req.body.email;
+    const userUpdated = await User.findOneAndUpdate(
+      { email: email },
+      {
+        $set: {
+          isVerified: 1,
+        },
+      },
+    );
+    if (userUpdated) {
+      return successResponse(res, 201, `User verification successful`, '');
+    } else {
+      return errorResponse(res, 400, `User verification unsuccessfu!`);
+    }
+  } catch (error: any) {
+    res.status(500).send({
+      message: error.message,
+    });
+  }
+};
+
 //POST Login User http://localhost:4000/api/v1/users/login
 export const loginUser = async (req: Request, res: Response) => {
   try {

@@ -5,6 +5,7 @@ import {
   updateUser,
   registerUser,
   loginUser,
+  verifyUser,
 } from '../controllers/users.controller';
 import upload from '../middleware/fileUpload';
 import { registerUserValidator } from '../validator/user.validator';
@@ -20,5 +21,6 @@ router.post(
   registerUser,
 );
 router.post('/login', loginUser);
+router.post('/verify-user', verifyUser);
 
 export default router;
