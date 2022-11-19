@@ -10,3 +10,8 @@ export type UserRegister = {
 export type VerifyUserType = {
   email: string
 }
+
+export type UserLogin = {
+  email: string
+  password: string
+}

@@ -20,7 +20,7 @@ router.post(
   registerUserValidator,
   registerUser,
 );
-router.post('/login', loginUser);
 router.post('/verify-user/:_id', verifyUser);
+router.post('/login', loginUser);
 
 export default router;
