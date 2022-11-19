@@ -82,7 +82,7 @@ const Login = () => {
     <Container>
       <Toaster position='top-center' reverseOrder={false} />
       <Wrapper>
-        <Title>SIGN IN</Title>
+        <Title>REGISTER</Title>
         <Form onSubmit={formik.handleSubmit}>
           <Input
             type='email'

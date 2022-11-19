@@ -75,7 +75,7 @@ const VerifyUser = () => {
     <Container>
       <Toaster position='top-center' reverseOrder={false} />
       <Wrapper>
-        <Title>Verify User</Title>
+        <Title>VERIFY YOUR EMAIL ADDRESS</Title>
         <Form onSubmit={formik.handleSubmit}>
           <Input
             type='email'

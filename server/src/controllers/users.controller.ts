@@ -210,8 +210,32 @@ export const forgetPassword = async (req: Request, res: Response) => {
         return errorResponse(res, 400, `Verify your email address`);
       }
     } else {
-      return errorResponse(res, 404, `This user does not exist`);
+      return errorResponse(res, 404, `User does not exist`);
     }
+  } catch (error: any) {
+    return errorResponse(res, 500, error.message);
+  }
+};
+
+//POST Reset Password http://localhost:4000/api/v1/users/reset-password
+export const resetPassword = async (req: Request, res: Response) => {
+  try {
+    const { password, email } = req.body;
+    const hashPassword = await hashedPassword(password);
+    const user = await User.findOneAndUpdate(
+      { email: email },
+      {
+        $set: {
+          password: hashPassword,
+          token: '',
+        },
+      },
+    );
+    console.log(user);
+    if (!user) {
+      return errorResponse(res, 404, `User does not exist`);
+    }
+    return successResponse(res, 201, `Password changed successfully`, '');
   } catch (error: any) {
     return errorResponse(res, 500, error.message);
   }

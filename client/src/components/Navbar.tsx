@@ -89,7 +89,7 @@ const Navbar = () => {
             <MenuItem>PRODUCTS</MenuItem>
           </Link>
           <Link style={{ textDecoration: 'none', color: 'teal' }} to='/register'>
-            <MenuItem>SIGN UP</MenuItem>
+            <MenuItem>REGISTER</MenuItem>
           </Link>
           <Link style={{ textDecoration: 'none', color: 'teal' }} to='/login'>
             <MenuItem>LOGIN</MenuItem>
