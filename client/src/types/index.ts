@@ -6,3 +6,7 @@ export type UserRegister = {
   password: string
   confirmPassword: string
 }
+
+export type VerifyUserType = {
+  email: string
+}

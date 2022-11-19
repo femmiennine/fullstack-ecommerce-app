@@ -113,7 +113,7 @@ export const registerUser = async (req: Request, res: Response) => {
   }
 };
 
-//POST Verify User http://localhost:4000/api/v1/users/verify-user
+//POST Verify User http://localhost:4000/api/v1/users/verify-user/:_id
 export const verifyUser = async (req: Request, res: Response) => {
   try {
     const email = req.body.email;

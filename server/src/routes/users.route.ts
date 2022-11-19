@@ -21,6 +21,6 @@ router.post(
   registerUser,
 );
 router.post('/login', loginUser);
-router.post('/verify-user', verifyUser);
+router.post('/verify-user/:_id', verifyUser);
 
 export default router;

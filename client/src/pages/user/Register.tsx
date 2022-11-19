@@ -80,6 +80,7 @@ const Register = () => {
     onSubmit: async (user: UserRegister, { resetForm }) => {
       try {
         const response = await registerUser(user)
+        console.log(response)
         toast.success(response.message)
         resetForm({})
         setTimeout(() => {
