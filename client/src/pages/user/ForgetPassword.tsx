@@ -68,7 +68,7 @@ const ForgetPassword = () => {
       try {
         const response = await forgetPassword(user)
         toast.success(response.message)
-        navigate('/login')
+        navigate('/')
       } catch (error: any) {
         toast.error(error.response.data.message)
         resetForm({})

@@ -55,7 +55,9 @@ const Button = styled.button`
   margin-bottom: 10px;
 `
 
-const Line = styled.p``
+const Line = styled.p`
+  font-size: 0.8rem;
+`
 
 const Login = () => {
   const navigate = useNavigate()
@@ -82,7 +84,7 @@ const Login = () => {
     <Container>
       <Toaster position='top-center' reverseOrder={false} />
       <Wrapper>
-        <Title>REGISTER</Title>
+        <Title>LOGIN</Title>
         <Form onSubmit={formik.handleSubmit}>
           <Input
             type='email'
@@ -90,6 +92,7 @@ const Login = () => {
             id='email'
             value={formik.values.email}
             onChange={formik.handleChange}
+            placeholder='Email'
           />
           <Input
             type='password'
@@ -97,6 +100,7 @@ const Login = () => {
             id='password'
             value={formik.values.password}
             onChange={formik.handleChange}
+            placeholder='Password'
           />
           <Button type='submit'>LOGIN</Button>
           {/* {error && <Error></Error>} */}

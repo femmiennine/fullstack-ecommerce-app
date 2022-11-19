@@ -19,3 +19,9 @@ export type UserLogin = {
 export type ForgetPasswordType = {
   email: string
 }
+
+export type ResetPasswordType = {
+  password: string
+  email: string
+  confirmPassword: string
+}
