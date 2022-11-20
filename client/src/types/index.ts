@@ -25,3 +25,11 @@ export type ResetPasswordType = {
   email: string
   confirmPassword: string
 }
+
+export type UserProfileType = {
+  firstname: string
+  lastname: string
+  email: string
+  phone: string
+  password: string
+}

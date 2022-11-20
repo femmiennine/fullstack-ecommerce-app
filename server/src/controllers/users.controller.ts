@@ -6,6 +6,7 @@ import { errorResponse, successResponse } from '../helper/responseHandler';
 import { sendVerificationEmail } from '../utils/sendVerificationEmail';
 import dev from '../config/secrets';
 import { sendResetPasswordEmail } from '../utils/sendResetPasswordEmail';
+import { ICustomRequest, IJWTToken } from '../middleware/auth';
 
 //GET all data of Users http://localhost:4000/api/v1/users
 export const getAllUsers = async (req: Request, res: Response) => {
@@ -236,6 +237,51 @@ export const resetPassword = async (req: Request, res: Response) => {
       return errorResponse(res, 404, `User does not exist`);
     }
     return successResponse(res, 201, `Password changed successfully`, '');
+  } catch (error: any) {
+    return errorResponse(res, 500, error.message);
+  }
+};
+
+//GET User Profile http://localhost:4000/api/v1/users/profile
+export const userProfile = async (req: Request, res: Response) => {
+  try {
+    console.log(req.headers.cookie);
+    const user = await User.findOne(
+      { _id: (req as ICustomRequest).id },
+      { password: 0 },
+    );
+    if (!user) {
+      return errorResponse(res, 404, `No user exist with this id`);
+    }
+    res.status(200).json({
+      message: 'User info returned successfully',
+      user,
+    });
+  } catch (error: any) {
+    return errorResponse(res, 500, error.message);
+  }
+};
+
+//POST Logout User http://localhost:4000/api/v1/users/logout
+export const logoutUser = async (req: Request, res: Response) => {
+  try {
+    if (!req.headers.cookie) {
+      return res.status(404).send({
+        message: 'No cookie found',
+      });
+    }
+    const token = req.headers.cookie.split('=')[1];
+    if (!token) {
+      return errorResponse(res, 404, `No token found`);
+    }
+    jwt.verify(token, String(dev.app.jwt), function (error, decoded) {
+      if (error) {
+        console.log(error);
+      }
+      console.log(decoded);
+      res.clearCookie(`${(decoded as IJWTToken).id}`);
+    });
+    return successResponse(res, 200, `User logged out successfully`, '');
   } catch (error: any) {
     return errorResponse(res, 500, error.message);
   }

@@ -8,9 +8,12 @@ import {
   loginUser,
   forgetPassword,
   resetPassword,
+  userProfile,
+  logoutUser,
 } from '../controllers/users.controller';
-import upload from '../middleware/fileUpload';
+import { isAuthorized } from '../middleware/auth';
 import { registerUserValidator } from '../validator/user.validator';
+import upload from '../middleware/fileUpload';
 const router = express.Router();
 
 router.get('/', getAllUsers);
@@ -26,5 +29,7 @@ router.post('/verify-user/:_id', verifyUser);
 router.post('/login', loginUser);
 router.post('/forget-password', forgetPassword);
 router.post('/reset-password', resetPassword);
+router.get('/profile', isAuthorized, userProfile);
+router.post('/logout', isAuthorized, logoutUser);
 
 export default router;

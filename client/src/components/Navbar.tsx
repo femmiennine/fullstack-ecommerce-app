@@ -61,7 +61,7 @@ const Right = styled.div`
 
 const MenuItem = styled.div`
   font-size: 14px;
-  font-weight: bold;
+  font-weight: 600;
   cursor: pointer;
   margin-left: 25px;
   ${mobile({ fontSize: '12px', marginLeft: '10px' })}
@@ -93,6 +93,12 @@ const Navbar = () => {
           </Link>
           <Link style={{ textDecoration: 'none', color: 'teal' }} to='/login'>
             <MenuItem>LOGIN</MenuItem>
+          </Link>
+          <Link style={{ textDecoration: 'none', color: 'teal' }} to='/profile'>
+            <MenuItem>PROFILE</MenuItem>
+          </Link>
+          <Link style={{ textDecoration: 'none', color: 'teal' }} to='/logout'>
+            <MenuItem>LOGOUT</MenuItem>
           </Link>
           <Link style={{ textDecoration: 'none', color: 'teal' }} to='/cart'>
             <MenuItem>

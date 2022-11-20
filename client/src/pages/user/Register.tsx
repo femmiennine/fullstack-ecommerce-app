@@ -55,16 +55,6 @@ const Button = styled.button`
   cursor: pointer;
 `
 
-const Span = styled.span`
-  color: red;
-  font-size: 0.7rem;
-  padding: 5px;
-  min-width: 40%;
-  margin: 20px 10px 0px 0px;
-  padding: 10px;
-  flex: 1;
-`
-
 const Register = () => {
   const navigate = useNavigate()
   const formik = useFormik({
@@ -80,7 +70,6 @@ const Register = () => {
     onSubmit: async (user: UserRegister, { resetForm }) => {
       try {
         const response = await registerUser(user)
-        console.log(response)
         toast.success(response.message)
         resetForm({})
         setTimeout(() => {
@@ -105,11 +94,6 @@ const Register = () => {
             onChange={formik.handleChange}
             placeholder='First Name'
           />
-          {/* <br />
-            {formik.touched.firstname && formik.errors.firstname ? (
-              <Span>{formik.errors.firstname}</Span>
-            ) : null} */}
-
           <Input
             type='lastname'
             name='lastname'
@@ -118,11 +102,6 @@ const Register = () => {
             onChange={formik.handleChange}
             placeholder='Last Name'
           />
-          {/* <br />
-            {formik.touched.lastname && formik.errors.lastname ? (
-              <Span>{formik.errors.lastname}</Span>
-            ) : null} */}
-
           <Input
             type='email'
             name='email'
@@ -131,11 +110,6 @@ const Register = () => {
             onChange={formik.handleChange}
             placeholder='Email'
           />
-          {/* <br />
-            {formik.touched.email && formik.errors.email ? (
-              <Span>{formik.errors.email}</Span>
-            ) : null} */}
-
           <Input
             type='tel'
             name='phone'
@@ -144,11 +118,6 @@ const Register = () => {
             onChange={formik.handleChange}
             placeholder='Phone'
           />
-          {/* <br />
-            {formik.touched.phone && formik.errors.phone ? (
-              <Span>{formik.errors.phone}</Span>
-            ) : null} */}
-
           <Input
             type='password'
             name='password'
@@ -157,11 +126,6 @@ const Register = () => {
             onChange={formik.handleChange}
             placeholder='Password'
           />
-          {/* <br />
-            {formik.touched.password && formik.errors.password ? (
-              <Span>{formik.errors.password}</Span>
-            ) : null} */}
-
           <Input
             type='password'
             name='confirmPassword'
@@ -170,11 +134,6 @@ const Register = () => {
             onChange={formik.handleChange}
             placeholder='Confirm Password'
           />
-          {/* <br />
-            {formik.touched.confirmPassword && formik.errors.confirmPassword ? (
-              <Span>{formik.errors.confirmPassword}</Span>
-            ) : null} */}
-
           <Agreement>
             By creating an account, I consent to the processing of my personal data in accordance
             with the <b>PRIVACY POLICY</b>
