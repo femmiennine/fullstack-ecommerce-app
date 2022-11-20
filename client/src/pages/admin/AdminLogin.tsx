@@ -5,16 +5,16 @@ import { Toaster, toast } from 'react-hot-toast'
 import { useAppDispatch } from '../../app/hook'
 import { login } from '../../features/userSlice'
 import { validationSchema } from '../../validator/login.schema'
-import { UserLogin } from '../../types/index'
-import { loginUser } from '../../services/userServices'
+import { AdminLoginType } from '../../types/index'
+import { loginAdmin } from '../../services/adminServices'
 import { mobile } from '../../utils/responsive'
-import signin from '../../images/signin.jpg'
+import admin from '../../images/admin.jpg'
 
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
   background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)),
-    url(${signin}) center;
+    url(${admin}) center;
   background-size: cover;
   display: flex;
   align-items: center;
@@ -59,7 +59,7 @@ const Line = styled.p`
   font-size: 0.8rem;
 `
 
-const Login = () => {
+const AdminLogin = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const formik = useFormik({
@@ -68,12 +68,12 @@ const Login = () => {
       password: '',
     },
     validationSchema,
-    onSubmit: async (user: UserLogin, { resetForm }) => {
+    onSubmit: async (admin: AdminLoginType, { resetForm }) => {
       try {
-        const response = await loginUser(user)
+        const response = await loginAdmin(admin)
         toast.success(response.message)
         dispatch(login())
-        navigate('/profile')
+        navigate('/admin-dashboard')
       } catch (error: any) {
         toast.error(error.response.data.message)
         resetForm({})
@@ -84,7 +84,7 @@ const Login = () => {
     <Container>
       <Toaster position='top-center' reverseOrder={false} />
       <Wrapper>
-        <Title>USER LOGIN</Title>
+        <Title>ADMIN LOGIN</Title>
         <Form onSubmit={formik.handleSubmit}>
           <Input
             type='email'
@@ -107,8 +107,8 @@ const Login = () => {
           <Link to='/forget-password' style={{ textDecoration: 'none', color: 'teal' }}>
             <Line>FORGET PASSWORD?</Line>
           </Link>
-          <Link to='/admin' style={{ textDecoration: 'none', color: 'teal' }}>
-            <Line>I AM AN ADMIN</Line>
+          <Link to='/login' style={{ textDecoration: 'none', color: 'teal' }}>
+            <Line>GO BACK TO USER LOGIN</Line>
           </Link>
           <Link to='/register' style={{ textDecoration: 'none', color: 'teal' }}>
             <Line>CREATE A NEW ACCOUNT</Line>
@@ -119,4 +119,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default AdminLogin

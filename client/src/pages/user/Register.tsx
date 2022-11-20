@@ -44,6 +44,7 @@ const Input = styled.input`
 const Agreement = styled.span`
   font-size: 12px;
   margin: 20px 0px;
+  color: teal;
 `
 
 const Button = styled.button`

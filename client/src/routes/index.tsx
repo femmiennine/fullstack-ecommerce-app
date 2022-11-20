@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { useAppSelector } from '../app/hook'
 import { Announcement, Navbar } from '../components'
+import AdminLogin from '../pages/admin/AdminLogin'
 import {
   Home,
   Login,
@@ -27,6 +28,7 @@ const Index = () => {
             <>
               <Route path='/register' element={<Register />}></Route>
               <Route path='/login' element={<Login />}></Route>
+              <Route path='/admin' element={<AdminLogin />}></Route>
             </>
           )}
 

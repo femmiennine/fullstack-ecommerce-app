@@ -33,3 +33,8 @@ export type UserProfileType = {
   phone: string
   password: string
 }
+
+export type AdminLoginType = {
+  email: string
+  password: string
+}
