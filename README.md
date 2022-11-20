@@ -1,9 +1,8 @@
 # FULL-STACK ECOMMERCE APP
 
-### This is an ongoing Full-Stack (MERN) project.
+## This is an ongoing Full-Stack (MERN) project.
 
-### Tech Stack will be used:
-
+### Tech Stack used:
 ### Frontend - Styled-Components, React.js, Redux, Redux-Toolkit, and TypeScript
 ### Backend - Node.js, Express.js, and TypeScript
 ### Database - MongoDB
