@@ -1,8 +1,11 @@
 import styled from 'styled-components'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Badge } from '@material-ui/core'
 import { Search, ShoppingCartOutlined } from '@material-ui/icons'
 import { mobile } from '../utils/responsive'
+import { useAppDispatch, useAppSelector } from '../app/hook'
+import axios from 'axios'
+import { logout } from '../features/userSlice'
 
 const Container = styled.div`
   height: 60px;
@@ -68,6 +71,24 @@ const MenuItem = styled.div`
 `
 
 const Navbar = () => {
+  const isLoggedIn = useAppSelector((state) => state.user.isLoggedIn)
+  const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+
+  const handleLogout = async () => {
+    try {
+      const response = await axios.post('http://localhost:4000/api/v1/users/logout', {
+        withCredentials: true,
+      })
+      if (response.status === 200) {
+        dispatch(logout())
+        navigate('/login')
+      }
+    } catch (error: any) {
+      console.log(error)
+    }
+  }
+
   return (
     <Container>
       <Wrapper>
@@ -88,18 +109,29 @@ const Navbar = () => {
           <Link style={{ textDecoration: 'none', color: 'teal' }} to='/products'>
             <MenuItem>PRODUCTS</MenuItem>
           </Link>
-          <Link style={{ textDecoration: 'none', color: 'teal' }} to='/register'>
-            <MenuItem>REGISTER</MenuItem>
-          </Link>
-          <Link style={{ textDecoration: 'none', color: 'teal' }} to='/login'>
-            <MenuItem>LOGIN</MenuItem>
-          </Link>
-          <Link style={{ textDecoration: 'none', color: 'teal' }} to='/profile'>
-            <MenuItem>PROFILE</MenuItem>
-          </Link>
-          <Link style={{ textDecoration: 'none', color: 'teal' }} to='/logout'>
-            <MenuItem>LOGOUT</MenuItem>
-          </Link>
+
+          {!isLoggedIn && (
+            <>
+              <Link style={{ textDecoration: 'none', color: 'teal' }} to='/register'>
+                <MenuItem>REGISTER</MenuItem>
+              </Link>
+              <Link style={{ textDecoration: 'none', color: 'teal' }} to='/login'>
+                <MenuItem>LOGIN</MenuItem>
+              </Link>
+            </>
+          )}
+
+          {isLoggedIn && (
+            <>
+              <Link style={{ textDecoration: 'none', color: 'teal' }} to='/profile'>
+                <MenuItem>PROFILE</MenuItem>
+              </Link>
+              <Link style={{ textDecoration: 'none', color: 'teal' }} to='/' onClick={handleLogout}>
+                <MenuItem>LOGOUT</MenuItem>
+              </Link>
+            </>
+          )}
+
           <Link style={{ textDecoration: 'none', color: 'teal' }} to='/cart'>
             <MenuItem>
               <Badge badgeContent={4} color='primary'>
