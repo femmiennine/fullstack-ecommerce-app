@@ -1,6 +1,6 @@
 # FULL-STACK ECOMMERCE APP
 
-### This is an ongoing Full-Stack (MERN) project. Functionalities and proper documentation will be added soon.
+### This is an ongoing Full-Stack (MERN) project.
 
 ### Tech Stack will be used:
 
