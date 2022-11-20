@@ -3,6 +3,7 @@ import morgan from 'morgan';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import userRouter from './routes/users.route';
+import adminRouter from './routes/admin.route';
 import dev from './config/secrets';
 import connectDB from './config/db';
 import { Request, Response, NextFunction } from 'express';
@@ -22,6 +23,7 @@ app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/api/v1/users', userRouter);
+app.use('/api/v1/admin', adminRouter);
 
 app.get('/testRoute', (req: Request, res: Response, next: NextFunction) => {
   try {
