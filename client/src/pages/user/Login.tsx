@@ -59,6 +59,7 @@ const Button = styled.button`
 
 const Line = styled.p`
   font-size: 0.8rem;
+  padding-bottom: 0.5rem;
 `
 
 const Login = () => {
@@ -107,15 +108,11 @@ const Login = () => {
               placeholder='Password'
             />
             <Button type='submit'>LOGIN</Button>
-            {/* {error && <Error></Error>} */}
             <Link to='/forget-password' style={{ textDecoration: 'none', color: 'teal' }}>
               <Line>FORGET PASSWORD?</Line>
             </Link>
-            <Link to='/admin' style={{ textDecoration: 'none', color: 'teal' }}>
-              <Line>I AM AN ADMIN</Line>
-            </Link>
-            <Link to='/register' style={{ textDecoration: 'none', color: 'teal' }}>
-              <Line>CREATE A NEW ACCOUNT</Line>
+            <Link to='/admin-login' style={{ textDecoration: 'none', color: 'teal' }}>
+              <Line>ADMIN LOGIN</Line>
             </Link>
           </Form>
         </Wrapper>

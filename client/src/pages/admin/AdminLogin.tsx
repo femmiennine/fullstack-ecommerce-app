@@ -9,6 +9,8 @@ import { AdminLoginType } from '../../types/index'
 import { loginAdmin } from '../../services/adminServices'
 import { mobile } from '../../utils/responsive'
 import admin from '../../images/admin.jpg'
+import Footer from '../../components/Footer'
+import { Navbar } from '../../components'
 
 const Container = styled.div`
   width: 100vw;
@@ -57,6 +59,7 @@ const Button = styled.button`
 
 const Line = styled.p`
   font-size: 0.8rem;
+  padding-bottom: 0.5rem;
 `
 
 const AdminLogin = () => {
@@ -81,41 +84,41 @@ const AdminLogin = () => {
     },
   })
   return (
-    <Container>
-      <Toaster position='top-center' reverseOrder={false} />
-      <Wrapper>
-        <Title>ADMIN LOGIN</Title>
-        <Form onSubmit={formik.handleSubmit}>
-          <Input
-            type='email'
-            name='email'
-            id='email'
-            value={formik.values.email}
-            onChange={formik.handleChange}
-            placeholder='Email'
-          />
-          <Input
-            type='password'
-            name='password'
-            id='password'
-            value={formik.values.password}
-            onChange={formik.handleChange}
-            placeholder='Password'
-          />
-          <Button type='submit'>LOGIN</Button>
-          {/* {error && <Error></Error>} */}
-          <Link to='/forget-password' style={{ textDecoration: 'none', color: 'teal' }}>
-            <Line>FORGET PASSWORD?</Line>
-          </Link>
-          <Link to='/login' style={{ textDecoration: 'none', color: 'teal' }}>
-            <Line>GO BACK TO USER LOGIN</Line>
-          </Link>
-          <Link to='/register' style={{ textDecoration: 'none', color: 'teal' }}>
-            <Line>CREATE A NEW ACCOUNT</Line>
-          </Link>
-        </Form>
-      </Wrapper>
-    </Container>
+    <>
+      <Navbar />
+      <Container>
+        <Toaster position='top-center' reverseOrder={false} />
+        <Wrapper>
+          <Title>ADMIN LOGIN</Title>
+          <Form onSubmit={formik.handleSubmit}>
+            <Input
+              type='email'
+              name='email'
+              id='email'
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              placeholder='Email'
+            />
+            <Input
+              type='password'
+              name='password'
+              id='password'
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              placeholder='Password'
+            />
+            <Button type='submit'>LOGIN</Button>
+            <Link to='/forget-password' style={{ textDecoration: 'none', color: 'teal' }}>
+              <Line>FORGET PASSWORD?</Line>
+            </Link>
+            <Link to='/login' style={{ textDecoration: 'none', color: 'teal' }}>
+              <Line>USER LOGIN</Line>
+            </Link>
+          </Form>
+        </Wrapper>
+      </Container>
+      <Footer />
+    </>
   )
 }
 

@@ -89,7 +89,6 @@ const VerifyUser = () => {
               onChange={formik.handleChange}
               placeholder='Email'
             />
-            {formik.touched.email && formik.errors.email ? <p>{formik.errors.email}</p> : null}
             <Button type='submit'>VERIFY</Button>
           </Form>
         </Wrapper>
