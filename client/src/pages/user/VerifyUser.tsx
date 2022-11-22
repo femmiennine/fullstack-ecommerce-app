@@ -7,6 +7,8 @@ import { VerifyUserType } from '../../types/index'
 import { validationSchema } from '../../validator/verifyUser.schema'
 import { mobile } from '../../utils/responsive'
 import verify from '../../images/verify.jpg'
+import { Navbar } from '../../components'
+import Footer from '../../components/Footer'
 
 const Container = styled.div`
   width: 100vw;
@@ -72,24 +74,28 @@ const VerifyUser = () => {
   })
 
   return (
-    <Container>
-      <Toaster position='top-center' reverseOrder={false} />
-      <Wrapper>
-        <Title>VERIFY YOUR EMAIL ADDRESS</Title>
-        <Form onSubmit={formik.handleSubmit}>
-          <Input
-            type='email'
-            name='email'
-            id='email'
-            value={formik.values.email}
-            onChange={formik.handleChange}
-            placeholder='Email'
-          />
-          {formik.touched.email && formik.errors.email ? <p>{formik.errors.email}</p> : null}
-          <Button type='submit'>VERIFY</Button>
-        </Form>
-      </Wrapper>
-    </Container>
+    <>
+      <Navbar />
+      <Container>
+        <Toaster position='top-center' reverseOrder={false} />
+        <Wrapper>
+          <Title>VERIFY YOUR EMAIL ADDRESS</Title>
+          <Form onSubmit={formik.handleSubmit}>
+            <Input
+              type='email'
+              name='email'
+              id='email'
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              placeholder='Email'
+            />
+            {formik.touched.email && formik.errors.email ? <p>{formik.errors.email}</p> : null}
+            <Button type='submit'>VERIFY</Button>
+          </Form>
+        </Wrapper>
+      </Container>
+      <Footer />
+    </>
   )
 }
 

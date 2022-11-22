@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { useAppSelector } from '../app/hook'
-import { Announcement, Navbar } from '../components'
 import AdminLogin from '../pages/admin/AdminLogin'
+import AdminHomepage from '../pages/admin/AdminDashboard'
 import {
   Home,
   Login,
@@ -11,15 +11,12 @@ import {
   ForgetPassword,
   ResetPassword,
   Error,
-  Footer,
 } from '../pages/index'
 
-const Index = () => {
+const UserRoute = () => {
   const isLoggedIn = useAppSelector((state) => state.user.isLoggedIn)
   return (
     <BrowserRouter>
-      <Announcement />
-      <Navbar />
       <Routes>
         <Route>
           <Route path='/' element={<Home />}></Route>
@@ -33,15 +30,14 @@ const Index = () => {
           )}
 
           {isLoggedIn && <Route path='/profile' element={<Profile />}></Route>}
-
+          <Route path='/admin-dashboard' element={<AdminHomepage />}></Route>
           <Route path='/verify-user/:_id' element={<VerifyUser />}></Route>
           <Route path='/forget-password' element={<ForgetPassword />}></Route>
           <Route path='/reset-password' element={<ResetPassword />}></Route>
           <Route path='*' element={<Error />}></Route>
         </Route>
       </Routes>
-      <Footer />
     </BrowserRouter>
   )
 }
-export default Index
+export default UserRoute

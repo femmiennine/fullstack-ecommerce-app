@@ -1,19 +1,20 @@
 import styled from 'styled-components'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
 import { Toaster, toast } from 'react-hot-toast'
-import { useAppDispatch } from '../../app/hook'
 import { validationSchema } from '../../validator/resetPassword.schema'
 import { ResetPasswordType } from '../../types/index'
 import { resetPassword } from '../../services/userServices'
 import { mobile } from '../../utils/responsive'
-import signin from '../../images/signin.jpg'
+import reset from '../../images/reset.jpg'
+import Footer from '../../components/Footer'
+import { Navbar } from '../../components'
 
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
   background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)),
-    url(${signin}) center;
+    url(${reset}) center;
   background-size: cover;
   display: flex;
   align-items: center;
@@ -45,7 +46,7 @@ const Input = styled.input`
 `
 
 const Button = styled.button`
-  width: 40%;
+  width: 60%;
   border: none;
   padding: 15px 20px;
   background-color: teal;
@@ -79,43 +80,43 @@ const ResetPassword = () => {
     },
   })
   return (
-    <Container>
-      <Toaster position='top-center' reverseOrder={false} />
-      <Wrapper>
-        <Title>RESET PASSWORD</Title>
-        <Form onSubmit={formik.handleSubmit}>
-          <Input
-            type='email'
-            name='email'
-            id='email'
-            value={formik.values.email}
-            onChange={formik.handleChange}
-            placeholder='Email'
-          />
-          <Input
-            type='password'
-            name='password'
-            id='password'
-            value={formik.values.password}
-            onChange={formik.handleChange}
-            placeholder='New Password'
-          />
-          <Input
-            type='password'
-            name='confirmPassword'
-            id='confirmPassword'
-            value={formik.values.confirmPassword}
-            onChange={formik.handleChange}
-            placeholder='Confirm New Password'
-          />
-          <Button type='submit'>RESET MY PASSWORD</Button>
-          {/* {error && <Error></Error>} */}
-          <Link to='/register' style={{ textDecoration: 'none', color: 'teal' }}>
-            <Line>CREATE A NEW ACCOUNT</Line>
-          </Link>
-        </Form>
-      </Wrapper>
-    </Container>
+    <>
+      <Navbar />
+      <Container>
+        <Toaster position='top-center' reverseOrder={false} />
+        <Wrapper>
+          <Title>RESET PASSWORD</Title>
+          <Form onSubmit={formik.handleSubmit}>
+            <Input
+              type='email'
+              name='email'
+              id='email'
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              placeholder='Email'
+            />
+            <Input
+              type='password'
+              name='password'
+              id='password'
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              placeholder='New Password'
+            />
+            <Input
+              type='password'
+              name='confirmPassword'
+              id='confirmPassword'
+              value={formik.values.confirmPassword}
+              onChange={formik.handleChange}
+              placeholder='Confirm New Password'
+            />
+            <Button type='submit'>RESET MY PASSWORD</Button>
+          </Form>
+        </Wrapper>
+      </Container>
+      <Footer />
+    </>
   )
 }
 

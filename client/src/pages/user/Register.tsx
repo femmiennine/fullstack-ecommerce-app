@@ -7,6 +7,8 @@ import { UserRegister } from '../../types'
 import { mobile } from '../../utils/responsive'
 import { validationSchema } from '../../validator/registration.schema'
 import register from '../../images/register.jpg'
+import { Navbar } from '../../components'
+import Footer from '../../components/Footer'
 
 const Container = styled.div`
   width: 100vw;
@@ -82,67 +84,71 @@ const Register = () => {
     },
   })
   return (
-    <Container>
-      <Toaster position='top-center' reverseOrder={false} />
-      <Wrapper>
-        <Title>CREATE AN ACCOUNT</Title>
-        <Form onSubmit={formik.handleSubmit}>
-          <Input
-            type='firstname'
-            name='firstname'
-            id='firstname'
-            value={formik.values.firstname}
-            onChange={formik.handleChange}
-            placeholder='First Name'
-          />
-          <Input
-            type='lastname'
-            name='lastname'
-            id='lastname'
-            value={formik.values.lastname}
-            onChange={formik.handleChange}
-            placeholder='Last Name'
-          />
-          <Input
-            type='email'
-            name='email'
-            id='email'
-            value={formik.values.email}
-            onChange={formik.handleChange}
-            placeholder='Email'
-          />
-          <Input
-            type='tel'
-            name='phone'
-            id='phone'
-            value={formik.values.phone}
-            onChange={formik.handleChange}
-            placeholder='Phone'
-          />
-          <Input
-            type='password'
-            name='password'
-            id='password'
-            value={formik.values.password}
-            onChange={formik.handleChange}
-            placeholder='Password'
-          />
-          <Input
-            type='password'
-            name='confirmPassword'
-            id='confirmPassword'
-            value={formik.values.confirmPassword}
-            onChange={formik.handleChange}
-            placeholder='Confirm Password'
-          />
-          <Agreement>
-            By creating an account, I consent to the processing of my personal data in accordance
-            with the <b>PRIVACY POLICY</b>
-          </Agreement>
-          <Button type='submit'>CREATE</Button>
-        </Form>
-      </Wrapper>
-    </Container>
+    <>
+      <Navbar />
+      <Container>
+        <Toaster position='top-center' reverseOrder={false} />
+        <Wrapper>
+          <Title>CREATE AN ACCOUNT</Title>
+          <Form onSubmit={formik.handleSubmit}>
+            <Input
+              type='firstname'
+              name='firstname'
+              id='firstname'
+              value={formik.values.firstname}
+              onChange={formik.handleChange}
+              placeholder='First Name'
+            />
+            <Input
+              type='lastname'
+              name='lastname'
+              id='lastname'
+              value={formik.values.lastname}
+              onChange={formik.handleChange}
+              placeholder='Last Name'
+            />
+            <Input
+              type='email'
+              name='email'
+              id='email'
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              placeholder='Email'
+            />
+            <Input
+              type='tel'
+              name='phone'
+              id='phone'
+              value={formik.values.phone}
+              onChange={formik.handleChange}
+              placeholder='Phone'
+            />
+            <Input
+              type='password'
+              name='password'
+              id='password'
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              placeholder='Password'
+            />
+            <Input
+              type='password'
+              name='confirmPassword'
+              id='confirmPassword'
+              value={formik.values.confirmPassword}
+              onChange={formik.handleChange}
+              placeholder='Confirm Password'
+            />
+            <Agreement>
+              By creating an account, I consent to the processing of my personal data in accordance
+              with the <b>PRIVACY POLICY</b>
+            </Agreement>
+            <Button type='submit'>CREATE</Button>
+          </Form>
+        </Wrapper>
+      </Container>
+      <Footer />
+    </>
   )
 }
 

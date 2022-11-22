@@ -50,3 +50,19 @@ export const loginAdmin = async (req: Request, res: Response) => {
     return errorResponse(res, 500, error.message);
   }
 };
+
+//GET User Profile http://localhost:4000/api/v1/admin/admin-dashboard
+export const adminDashboard = async (req: Request, res: Response) => {
+  try {
+    const users = await User.find({ isAdmin: 0 });
+    if (!users) {
+      return errorResponse(res, 404, `No users found!`);
+    }
+    res.status(200).json({
+      message: 'Users info returned successfully',
+      users,
+    });
+  } catch (error: any) {
+    return errorResponse(res, 500, error.message);
+  }
+};

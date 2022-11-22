@@ -9,6 +9,8 @@ import { UserLogin } from '../../types/index'
 import { loginUser } from '../../services/userServices'
 import { mobile } from '../../utils/responsive'
 import signin from '../../images/signin.jpg'
+import Footer from '../../components/Footer'
+import { Navbar } from '../../components'
 
 const Container = styled.div`
   width: 100vw;
@@ -81,41 +83,45 @@ const Login = () => {
     },
   })
   return (
-    <Container>
-      <Toaster position='top-center' reverseOrder={false} />
-      <Wrapper>
-        <Title>USER LOGIN</Title>
-        <Form onSubmit={formik.handleSubmit}>
-          <Input
-            type='email'
-            name='email'
-            id='email'
-            value={formik.values.email}
-            onChange={formik.handleChange}
-            placeholder='Email'
-          />
-          <Input
-            type='password'
-            name='password'
-            id='password'
-            value={formik.values.password}
-            onChange={formik.handleChange}
-            placeholder='Password'
-          />
-          <Button type='submit'>LOGIN</Button>
-          {/* {error && <Error></Error>} */}
-          <Link to='/forget-password' style={{ textDecoration: 'none', color: 'teal' }}>
-            <Line>FORGET PASSWORD?</Line>
-          </Link>
-          <Link to='/admin' style={{ textDecoration: 'none', color: 'teal' }}>
-            <Line>I AM AN ADMIN</Line>
-          </Link>
-          <Link to='/register' style={{ textDecoration: 'none', color: 'teal' }}>
-            <Line>CREATE A NEW ACCOUNT</Line>
-          </Link>
-        </Form>
-      </Wrapper>
-    </Container>
+    <>
+      <Navbar />
+      <Container>
+        <Toaster position='top-center' reverseOrder={false} />
+        <Wrapper>
+          <Title>USER LOGIN</Title>
+          <Form onSubmit={formik.handleSubmit}>
+            <Input
+              type='email'
+              name='email'
+              id='email'
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              placeholder='Email'
+            />
+            <Input
+              type='password'
+              name='password'
+              id='password'
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              placeholder='Password'
+            />
+            <Button type='submit'>LOGIN</Button>
+            {/* {error && <Error></Error>} */}
+            <Link to='/forget-password' style={{ textDecoration: 'none', color: 'teal' }}>
+              <Line>FORGET PASSWORD?</Line>
+            </Link>
+            <Link to='/admin' style={{ textDecoration: 'none', color: 'teal' }}>
+              <Line>I AM AN ADMIN</Line>
+            </Link>
+            <Link to='/register' style={{ textDecoration: 'none', color: 'teal' }}>
+              <Line>CREATE A NEW ACCOUNT</Line>
+            </Link>
+          </Form>
+        </Wrapper>
+      </Container>
+      <Footer />
+    </>
   )
 }
 

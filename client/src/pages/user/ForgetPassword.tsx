@@ -7,6 +7,8 @@ import { ForgetPasswordType } from '../../types/index'
 import { validationSchema } from '../../validator/forgetPassword.schema'
 import { mobile } from '../../utils/responsive'
 import forget from '../../images/forget.jpg'
+import Footer from '../../components/Footer'
+import { Navbar } from '../../components'
 
 const Container = styled.div`
   width: 100vw;
@@ -77,28 +79,32 @@ const ForgetPassword = () => {
   })
 
   return (
-    <Container>
-      <Toaster position='top-center' reverseOrder={false} />
-      <Wrapper>
-        <Title>FORGET PASSWORD</Title>
-        <Instruction>
-          Please enter your email address and we will send you instructions on how to reset your
-          password.
-        </Instruction>
-        <Form onSubmit={formik.handleSubmit}>
-          <Input
-            type='email'
-            name='email'
-            id='email'
-            value={formik.values.email}
-            onChange={formik.handleChange}
-            placeholder='Email'
-          />
-          {formik.touched.email && formik.errors.email ? <p>{formik.errors.email}</p> : null}
-          <Button type='submit'>SUBMIT</Button>
-        </Form>
-      </Wrapper>
-    </Container>
+    <>
+      <Navbar />
+      <Container>
+        <Toaster position='top-center' reverseOrder={false} />
+        <Wrapper>
+          <Title>FORGET PASSWORD</Title>
+          <Instruction>
+            Please enter your email address and we will send you instructions on how to reset your
+            password.
+          </Instruction>
+          <Form onSubmit={formik.handleSubmit}>
+            <Input
+              type='email'
+              name='email'
+              id='email'
+              value={formik.values.email}
+              onChange={formik.handleChange}
+              placeholder='Email'
+            />
+            {formik.touched.email && formik.errors.email ? <p>{formik.errors.email}</p> : null}
+            <Button type='submit'>SUBMIT</Button>
+          </Form>
+        </Wrapper>
+      </Container>
+      <Footer />
+    </>
   )
 }
 

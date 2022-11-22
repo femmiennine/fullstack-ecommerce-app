@@ -5,6 +5,8 @@ import { Toaster, toast } from 'react-hot-toast'
 import { UserProfileType } from '../../types'
 import userprofile from '../../images/userprofile.jpg'
 import { mobile } from '../../utils/responsive'
+import { Navbar } from '../../components'
+import Footer from '../../components/Footer'
 
 axios.defaults.withCredentials = true
 
@@ -71,20 +73,24 @@ const Profile = () => {
   }, [])
 
   return (
-    <Container>
-      <Toaster position='top-center' reverseOrder={false} />
-      <Wrapper>
-        <Title>Welcome to Baby on Board, {user?.firstname}!</Title>
-        <Form>
-          <Input placeholder={user?.firstname} />
-          <Input placeholder={user?.lastname} />
-          <Input placeholder={user?.email} />
-          <Input placeholder={user?.phone} />
-          <br />
-          <Button type='submit'>EDIT ACCOUNT</Button>
-        </Form>
-      </Wrapper>
-    </Container>
+    <>
+      <Navbar />
+      <Container>
+        <Toaster position='top-center' reverseOrder={false} />
+        <Wrapper>
+          <Title>Welcome to Baby on Board, {user?.firstname}!</Title>
+          <Form>
+            <Input placeholder={user?.firstname} />
+            <Input placeholder={user?.lastname} />
+            <Input placeholder={user?.email} />
+            <Input placeholder={user?.phone} />
+            <br />
+            <Button type='submit'>EDIT ACCOUNT</Button>
+          </Form>
+        </Wrapper>
+      </Container>
+      <Footer />
+    </>
   )
 }
 export default Profile
