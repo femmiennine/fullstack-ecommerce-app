@@ -14,3 +14,5 @@ export const registerUserValidator = [
     next();
   },
 ];
+
+//REMINDER!!! add validation for others

@@ -28,7 +28,7 @@ export const loginAdmin = async (req: Request, res: Response) => {
       );
     }
     if (admin.isAdmin === 0) {
-      return errorResponse(res, 403, `Forbidden Route!`);
+      return errorResponse(res, 401, `Forbidden Route! Unauthorized login.`);
     }
     const isPasswordMatched = await comparePassword(password, admin.password);
     if (!isPasswordMatched) {
@@ -54,12 +54,12 @@ export const loginAdmin = async (req: Request, res: Response) => {
 //GET User Profile http://localhost:4000/api/v1/admin/admin-dashboard
 export const adminDashboard = async (req: Request, res: Response) => {
   try {
-    const users = await User.find({ isAdmin: 0 });
+    const users = await User.find({ isAdmin: 1 });
     if (!users) {
-      return errorResponse(res, 404, `No users found!`);
+      return errorResponse(res, 404, `Admin not found!`);
     }
     res.status(200).json({
-      message: 'Users info returned successfully',
+      message: 'Admin info returned successfully',
       users,
     });
   } catch (error: any) {

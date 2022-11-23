@@ -18,6 +18,21 @@ export const getAllUsers = async (req: Request, res: Response) => {
   }
 };
 
+//GET data of a User http://localhost:4000/api/v1/users/:_id
+export const getUserById = async (req: Request, res: Response) => {
+  try {
+    const _id = req.params;
+    const user = await User.findById({ _id: _id });
+    if (!user) {
+      return errorResponse(res, 404, `User not found!`);
+    } else {
+      return successResponse(res, 200, `User found!`, user);
+    }
+  } catch (error: any) {
+    return errorResponse(res, 500, error.message);
+  }
+};
+
 //DELETE a User by id http://localhost:4000/api/v1/users/:_id
 export const deleteUser = async (req: Request, res: Response) => {
   try {

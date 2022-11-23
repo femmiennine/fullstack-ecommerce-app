@@ -10,13 +10,15 @@ import {
   resetPassword,
   userProfile,
   logoutUser,
+  getUserById,
 } from '../controllers/users.controller';
 import { isAuthorized } from '../middleware/auth';
 import { registerUserValidator } from '../validator/user.validator';
-import upload from '../middleware/fileUpload';
+import upload from '../middleware/productFileUpload';
 const router = express.Router();
 
 router.get('/', getAllUsers);
+router.get('/', getUserById);
 router.delete('/:_id', deleteUser);
 router.put('/:_id', updateUser);
 router.post(
