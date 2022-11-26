@@ -3,6 +3,7 @@ import mongoose, { Document } from 'mongoose';
 export type UserDocument = Document & {
   firstname: string;
   lastname: string;
+  image: string;
   email: string;
   phone: string;
   password: string;
@@ -24,6 +25,12 @@ const userSchema = new mongoose.Schema({
     required: [true, 'Please enter your name'],
     maxLength: [30, 'Name cannot exceed 30 characters'],
     trim: true,
+  },
+
+  image: {
+    type: String,
+    data: Buffer,
+    contentType: String,
   },
 
   email: {

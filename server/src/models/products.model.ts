@@ -4,7 +4,7 @@ export type UserDocument = Document & {
   title: string;
   desc: string;
   image: string;
-  categories: Array<string>;
+  category: string;
   price: number;
   inStock: boolean;
 };
@@ -27,8 +27,9 @@ const productSchema = new mongoose.Schema({
     required: true,
   },
 
-  categories: {
-    type: Array<string>,
+  category: {
+    type: String,
+    required: true,
   },
 
   price: {

@@ -18,21 +18,6 @@ export const getAllUsers = async (req: Request, res: Response) => {
   }
 };
 
-//GET data of a User http://localhost:4000/api/v1/users/:_id
-export const getUserById = async (req: Request, res: Response) => {
-  try {
-    const _id = req.params;
-    const user = await User.findById({ _id: _id });
-    if (!user) {
-      return errorResponse(res, 404, `User not found!`);
-    } else {
-      return successResponse(res, 200, `User found!`, user);
-    }
-  } catch (error: any) {
-    return errorResponse(res, 500, error.message);
-  }
-};
-
 //DELETE a User by id http://localhost:4000/api/v1/users/:_id
 export const deleteUser = async (req: Request, res: Response) => {
   try {
@@ -90,9 +75,9 @@ export const registerUser = async (req: Request, res: Response) => {
         `Password must be at least 8 characters long.`,
       );
     }
-    const user = await User.findOne({ email: email });
-    if (user) {
-      return errorResponse(res, 400, `User already exists.`);
+    const existingUser = await User.findOne({ email: email });
+    if (existingUser) {
+      return errorResponse(res, 400, `User already exists. Please login.`);
     }
     const hashPassword = await hashedPassword(password);
     const newUser = new User({
@@ -143,7 +128,7 @@ export const verifyUser = async (req: Request, res: Response) => {
       },
     );
     if (userUpdated) {
-      return successResponse(res, 201, `User verification successful`, '');
+      return successResponse(res, 201, `User verification successful!`, '');
     } else {
       return errorResponse(res, 400, `User verification unsuccessfu!`);
     }
@@ -186,7 +171,7 @@ export const loginUser = async (req: Request, res: Response) => {
     console.log(token);
     res.cookie(String(user._id), token, {
       path: '/',
-      expires: new Date(Date.now() + 1000 * 200),
+      expires: new Date(Date.now() + 1000 * 30 * 30),
       httpOnly: true,
       sameSite: 'lax',
     });
@@ -260,7 +245,6 @@ export const resetPassword = async (req: Request, res: Response) => {
 //GET User Profile http://localhost:4000/api/v1/users/profile
 export const userProfile = async (req: Request, res: Response) => {
   try {
-    console.log(req.headers.cookie);
     const user = await User.findOne(
       { _id: (req as ICustomRequest).id },
       { password: 0 },

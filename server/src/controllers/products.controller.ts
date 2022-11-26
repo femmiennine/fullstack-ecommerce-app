@@ -5,11 +5,11 @@ import { errorResponse, successResponse } from '../helper/responseHandler';
 //POST Create a new product http://localhost:4000/api/v1/products
 export const createProduct = async (req: Request, res: Response) => {
   try {
-    const { title, desc, categories, price } = req.body;
+    const { title, desc, category, price } = req.body;
     const product = new Product({
       title,
       desc,
-      categories,
+      category,
       price,
       inStock: true,
       image: req.file?.filename,
@@ -35,7 +35,7 @@ export const updateProduct = async (req: Request, res: Response) => {
           $set: {
             title: req.body.title,
             desc: req.body.desc,
-            categories: req.body.categories,
+            category: req.body.category,
             price: req.body.price,
             inStock: req.body.inStock,
             image: req.file?.filename,
@@ -80,7 +80,7 @@ export const deleteProduct = async (req: Request, res: Response) => {
 export const getAllProducts = async (req: Request, res: Response) => {
   try {
     const allProducts = await Product.find();
-    return successResponse(res, 200, `Users found!`, allProducts);
+    return successResponse(res, 200, `Products found!`, allProducts);
   } catch (error: any) {
     return errorResponse(res, 500, error.message);
   }
@@ -90,7 +90,7 @@ export const getAllProducts = async (req: Request, res: Response) => {
 export const getProductById = async (req: Request, res: Response) => {
   try {
     const _id = req.params;
-    const product = await Product.findById({ _id: _id });
+    const product = await Product.findOne({ _id: _id });
     if (!product) {
       return errorResponse(res, 404, `Product not found!`);
     } else {

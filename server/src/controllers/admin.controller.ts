@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 import dev from '../config/secrets';
 import { comparePassword } from '../helper/password';
 import { errorResponse, successResponse } from '../helper/responseHandler';
+import { IJWTToken } from '../middleware/auth';
 import User from '../models/users.model';
 
 //POST Admin Login http://localhost:4000/api/v1/admin/login
@@ -41,7 +42,7 @@ export const loginAdmin = async (req: Request, res: Response) => {
     console.log(token);
     res.cookie(String(admin._id), token, {
       path: '/',
-      expires: new Date(Date.now() + 1000 * 200),
+      expires: new Date(Date.now() + 1000 * 200 * 60 * 60),
       httpOnly: true,
       sameSite: 'lax',
     });
@@ -54,14 +55,39 @@ export const loginAdmin = async (req: Request, res: Response) => {
 //GET User Profile http://localhost:4000/api/v1/admin/admin-dashboard
 export const adminDashboard = async (req: Request, res: Response) => {
   try {
-    const users = await User.find({ isAdmin: 1 });
-    if (!users) {
+    const user = await User.findOne({ isAdmin: 1 });
+    if (!user) {
       return errorResponse(res, 404, `Admin not found!`);
     }
     res.status(200).json({
       message: 'Admin info returned successfully',
-      users,
+      user,
     });
+  } catch (error: any) {
+    return errorResponse(res, 500, error.message);
+  }
+};
+
+//POST Logout User http://localhost:4000/api/v1/admin/logout
+export const logoutAdmin = async (req: Request, res: Response) => {
+  try {
+    if (!req.headers.cookie) {
+      return res.status(404).send({
+        message: 'No cookie found',
+      });
+    }
+    const token = req.headers.cookie.split('=')[1];
+    if (!token) {
+      return errorResponse(res, 404, `No token found`);
+    }
+    jwt.verify(token, String(dev.app.jwt), function (error, decoded) {
+      if (error) {
+        console.log(error);
+      }
+      console.log(decoded);
+      res.clearCookie(`${(decoded as IJWTToken).id}`);
+    });
+    return successResponse(res, 200, `Admin logged out successfully`, '');
   } catch (error: any) {
     return errorResponse(res, 500, error.message);
   }
