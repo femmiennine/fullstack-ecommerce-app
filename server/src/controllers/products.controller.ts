@@ -13,7 +13,7 @@ export const createProduct = async (req: Request, res: Response) => {
       category,
       price,
       inStock: true,
-      image: req.file?.filename,
+      image: req.file?.path,
     });
     const newProduct = await product.save();
     if (newProduct) {

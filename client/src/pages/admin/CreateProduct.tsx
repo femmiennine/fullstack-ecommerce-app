@@ -76,10 +76,10 @@ const AddProduct = () => {
         formData.append('price', values.price)
         formData.append('image', values.image)
         const response = await createProduct(formData)
-        toast.success(response.message)
-        resetForm({})
+        toast.success(response.formData.message)
+        const data = response.formData
         setTimeout(() => {
-          navigate('/admin-products')
+          navigate('/admin-products', data)
         }, 2000)
       } catch (error: any) {
         toast.error(error.response.data.message)

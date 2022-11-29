@@ -69,7 +69,7 @@ const AdminProducts = () => {
           {products.map((product: ProductType) => {
             return (
               <Card key={product._id}>
-                <img src={product.image} alt={product.image} />
+                <img src={`http://localhost:4000/${product.image}`} alt={product.image} />
                 <p>Title: {product.title}</p>
                 <p>Category: {product.category}</p>
                 <p>Price: {product.price}</p>

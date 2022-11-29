@@ -8,8 +8,7 @@ import productRouter from './routes/products.route';
 import dev from './config/secrets';
 import connectDB from './config/db';
 import { Request, Response, NextFunction } from 'express';
-// import { clientError, serverError } from './middleware/errorHandler';
-import path from 'path';
+import { clientError, serverError } from './middleware/errorHandler';
 
 const app = express();
 app.use(cors({ origin: dev.app.client_url, credentials: true }));
@@ -17,7 +16,7 @@ app.use(morgan('dev'));
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, 'public')));
+app.use('/public', express.static('public'));
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/admin', adminRouter);
 app.use('/api/v1/products', productRouter);
@@ -28,7 +27,7 @@ app.listen(port, async () => {
   await connectDB();
 });
 
-app.get('/testRoute', (req: Request, res: Response, next: NextFunction) => {
+app.get('/', (req: Request, res: Response, next: NextFunction) => {
   try {
     res.send('Welcome to the Server!');
   } catch (error) {
@@ -37,5 +36,5 @@ app.get('/testRoute', (req: Request, res: Response, next: NextFunction) => {
   }
 });
 
-// app.use(clientError);
-// app.use(serverError);
+app.use(clientError);
+app.use(serverError);
