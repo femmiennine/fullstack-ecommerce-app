@@ -10,6 +10,10 @@ import {
   WidgetsTwoTone,
 } from '@material-ui/icons'
 import avatar from '../../../images/blank-profile.png'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
+import toast from 'react-hot-toast'
+import { UserProfileType } from '../../../types/index'
 
 const Container = styled.div`
   display: flex;
@@ -66,6 +70,24 @@ const List = styled.li`
 `
 
 const Sidebar = () => {
+  const [user, setUser] = useState<UserProfileType>()
+  const sendRequest = async () => {
+    try {
+      const response = await axios.get('http://localhost:4000/api/v1/admin/admin-dashboard', {
+        withCredentials: true,
+      })
+      setUser(response.data.user)
+      console.log(response.data.user)
+      return response.data
+    } catch (error: any) {
+      toast.error(error.response.data.message)
+    }
+  }
+
+  useEffect(() => {
+    sendRequest()
+  }, [])
+
   return (
     <Container>
       <Header>
@@ -75,7 +97,7 @@ const Sidebar = () => {
 
       <Profile>
         <Image src={avatar} alt='empty avatar' />
-        <h4>Admin Name</h4>
+        <h4>Welcome back, {user?.firstname}!</h4>
       </Profile>
 
       <Navbar>
@@ -86,7 +108,7 @@ const Sidebar = () => {
           </List>
         </Link>
 
-        <Link to='/products' style={{ textDecoration: 'none', color: 'white' }}>
+        <Link to='/admin-products' style={{ textDecoration: 'none', color: 'white' }}>
           <List>
             <ChildFriendlyOutlined />
             <p>Products</p>

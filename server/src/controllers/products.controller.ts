@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import Product from '../models/products.model';
 import { errorResponse, successResponse } from '../helper/responseHandler';
+import dev from '../config/secrets';
 
 //POST Create a new product http://localhost:4000/api/v1/products
 export const createProduct = async (req: Request, res: Response) => {

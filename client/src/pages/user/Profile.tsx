@@ -62,6 +62,7 @@ const Profile = () => {
         withCredentials: true,
       })
       setUser(response.data.user)
+      console.log(response.data.user)
       return response.data
     } catch (error: any) {
       toast.error(error.response.data.message)
@@ -80,6 +81,7 @@ const Profile = () => {
         <Wrapper>
           <Title>Welcome to Baby on Board, {user?.firstname}!</Title>
           <Form>
+            <img src={user?.image} />
             <Input placeholder={user?.firstname} />
             <Input placeholder={user?.lastname} />
             <Input placeholder={user?.email} />

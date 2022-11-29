@@ -1,3 +1,5 @@
+import { ReactNode } from 'react'
+
 export type UserRegister = {
   firstname: string
   lastname: string
@@ -32,9 +34,26 @@ export type UserProfileType = {
   email: string
   phone: string
   password: string
+  image: string
 }
 
 export type AdminLoginType = {
   email: string
   password: string
+}
+
+export type InitialStateProduct = {
+  loading: boolean
+  error: string
+  products: ProductType[]
+}
+
+export type ProductType = {
+  _id: string
+  title: string
+  desc: string
+  image: string
+  category: string
+  price: number
+  inStock: boolean
 }

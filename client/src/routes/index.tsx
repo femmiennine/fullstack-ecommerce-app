@@ -2,6 +2,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { useAppSelector } from '../app/hook'
 import AdminDashboard from '../pages/admin/AdminDashboard'
 import AdminLogin from '../pages/admin/AdminLogin'
+import AdminProducts from '../pages/admin/AdminProducts'
+import CreateProduct from '../pages/admin/CreateProduct'
 import {
   Home,
   Login,
@@ -32,9 +34,14 @@ const UserRoute = () => {
           {isLoggedIn && (
             <>
               <Route path='/profile' element={<Profile />}></Route>
+              <Route path='/admin-dashboard' element={<AdminDashboard />}></Route>
+              <Route path='/admin-products' element={<AdminProducts />}></Route>
+              <Route path='/create-product' element={<CreateProduct />}></Route>
+              {/* <Route path="/products/:categories" element={<ProductList />}></Route>
+              <Route path="/product/id" */}
             </>
           )}
-          <Route path='/admin-dashboard' element={<AdminDashboard />}></Route>
+
           <Route path='/verify-user/:_id' element={<VerifyUser />}></Route>
           <Route path='/forget-password' element={<ForgetPassword />}></Route>
           <Route path='/reset-password' element={<ResetPassword />}></Route>

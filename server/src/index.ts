@@ -8,7 +8,8 @@ import productRouter from './routes/products.route';
 import dev from './config/secrets';
 import connectDB from './config/db';
 import { Request, Response, NextFunction } from 'express';
-import { clientError, serverError } from './middleware/errorHandler';
+// import { clientError, serverError } from './middleware/errorHandler';
+import path from 'path';
 
 const app = express();
 app.use(cors({ origin: dev.app.client_url, credentials: true }));
@@ -16,7 +17,7 @@ app.use(morgan('dev'));
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use('/uploads', express.static('uploads'));
+app.use(express.static(path.join(__dirname, 'public')));
 app.use('/api/v1/users', userRouter);
 app.use('/api/v1/admin', adminRouter);
 app.use('/api/v1/products', productRouter);
@@ -36,5 +37,5 @@ app.get('/testRoute', (req: Request, res: Response, next: NextFunction) => {
   }
 });
 
-app.use(clientError);
-app.use(serverError);
+// app.use(clientError);
+// app.use(serverError);
