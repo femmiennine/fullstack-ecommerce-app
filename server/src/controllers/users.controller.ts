@@ -9,55 +9,6 @@ import { sendResetPasswordEmail } from '../utils/sendResetPasswordEmail';
 import { ICustomRequest, IJWTToken } from '../middleware/auth';
 import randomString from 'random-string';
 
-//GET all data of Users http://localhost:4000/api/v1/users
-export const getAllUsers = async (req: Request, res: Response) => {
-  try {
-    const allUsers = await User.find();
-    return successResponse(res, 200, `Users found!`, allUsers);
-  } catch (error: any) {
-    return errorResponse(res, 500, error.message);
-  }
-};
-
-//DELETE a User by id http://localhost:4000/api/v1/users/:_id
-export const deleteUser = async (req: Request, res: Response) => {
-  try {
-    const _id = req.params;
-    const user = await User.findOne({ _id: _id });
-    if (user) {
-      await User.deleteOne({ _id: _id });
-      return successResponse(res, 200, `Account succcessfully deleted!`, '');
-    } else {
-      return errorResponse(res, 404, `User does not exist.`);
-    }
-  } catch (error: any) {
-    return errorResponse(res, 500, error.message);
-  }
-};
-
-//UPDATE a User by id http://localhost:4000/api/v1/users/:_id
-export const updateUser = async (req: Request, res: Response) => {
-  try {
-    const _id = req.params;
-    const user = await User.findOne({ _id: _id });
-    if (user) {
-      await User.updateOne(
-        { _id: _id },
-        {
-          $set: {
-            name: req.body.name,
-            email: req.body.email,
-            phone: req.body.phone,
-          },
-        },
-      );
-    }
-    return successResponse(res, 200, `User information updated!`, '');
-  } catch (error: any) {
-    return errorResponse(res, 500, error.message);
-  }
-};
-
 //POST Register a User http://localhost:4000/api/v1/users/register
 export const registerUser = async (req: Request, res: Response) => {
   try {
@@ -121,28 +72,6 @@ export const registerUser = async (req: Request, res: Response) => {
     return errorResponse(res, 500, error.message);
   }
 };
-
-//POST Verify User http://localhost:4000/api/v1/users/verify-user/:_id
-// export const verifyUser = async (req: Request, res: Response) => {
-//   try {
-//     const email = req.body.email;
-//     const userUpdated = await User.findOneAndUpdate(
-//       { email: email },
-//       {
-//         $set: {
-//           isVerified: 1,
-//         },
-//       },
-//     );
-//     if (userUpdated) {
-//       return successResponse(res, 201, `User verification successful!`, '');
-//     } else {
-//       return errorResponse(res, 400, `User verification unsuccessfu!`);
-//     }
-//   } catch (error: any) {
-//     return errorResponse(res, 500, error.message);
-//   }
-// };
 
 export const verifyUser = async (req: Request, res: Response) => {
   try {
@@ -315,6 +244,55 @@ export const logoutUser = async (req: Request, res: Response) => {
       res.clearCookie(`${(decoded as IJWTToken).id}`);
     });
     return successResponse(res, 200, `User logged out successfully`, '');
+  } catch (error: any) {
+    return errorResponse(res, 500, error.message);
+  }
+};
+
+//GET all data of Users http://localhost:4000/api/v1/users
+export const getAllUsers = async (req: Request, res: Response) => {
+  try {
+    const allUsers = await User.find();
+    return successResponse(res, 200, `Users found!`, allUsers);
+  } catch (error: any) {
+    return errorResponse(res, 500, error.message);
+  }
+};
+
+//DELETE a User by id http://localhost:4000/api/v1/users/:_id
+export const deleteUser = async (req: Request, res: Response) => {
+  try {
+    const _id = req.params;
+    const user = await User.findOne({ _id: _id });
+    if (user) {
+      await User.deleteOne({ _id: _id });
+      return successResponse(res, 200, `Account succcessfully deleted!`, '');
+    } else {
+      return errorResponse(res, 404, `User does not exist.`);
+    }
+  } catch (error: any) {
+    return errorResponse(res, 500, error.message);
+  }
+};
+
+//UPDATE a User by id http://localhost:4000/api/v1/users/:_id
+export const updateUser = async (req: Request, res: Response) => {
+  try {
+    const _id = req.params;
+    const user = await User.findOne({ _id: _id });
+    if (user) {
+      await User.updateOne(
+        { _id: _id },
+        {
+          $set: {
+            name: req.body.name,
+            email: req.body.email,
+            phone: req.body.phone,
+          },
+        },
+      );
+    }
+    return successResponse(res, 200, `User information updated!`, '');
   } catch (error: any) {
     return errorResponse(res, 500, error.message);
   }
