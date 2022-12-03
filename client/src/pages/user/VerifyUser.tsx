@@ -1,14 +1,11 @@
 import styled from 'styled-components'
-import { useFormik } from 'formik'
 import { Toaster, toast } from 'react-hot-toast'
-import { useNavigate } from 'react-router-dom'
-import { verifyUser } from '../../services/userServices'
-import { VerifyUserType } from '../../types/index'
-import { validationSchema } from '../../validator/verifyUser.schema'
+import { useNavigate, useParams } from 'react-router-dom'
 import { mobile } from '../../utils/responsive'
 import verify from '../../images/verify.jpg'
 import { Navbar } from '../../components'
 import Footer from '../../components/Footer'
+import { verifyUser } from '../../services/userServices'
 
 const Container = styled.div`
   width: 100vw;
@@ -33,18 +30,6 @@ const Title = styled.h1`
   font-weight: 300;
 `
 
-const Form = styled.form`
-  display: flex;
-  flex-direction: column;
-`
-
-const Input = styled.input`
-  flex: 1;
-  min-width: 40%;
-  margin: 10px 0;
-  padding: 10px;
-`
-
 const Button = styled.button`
   width: 40%;
   border: none;
@@ -55,23 +40,21 @@ const Button = styled.button`
 `
 
 const VerifyUser = () => {
+  const { token } = useParams()
   const navigate = useNavigate()
-  const formik = useFormik({
-    initialValues: {
-      email: '',
-    },
-    validationSchema,
-    onSubmit: async (user: VerifyUserType, { resetForm }) => {
-      try {
-        const response = await verifyUser(user)
-        toast.success(response.message)
+
+  const handleClick = async () => {
+    try {
+      const response = await verifyUser(token)
+      console.log(response)
+      toast.success(response.data.message)
+      setTimeout(() => {
         navigate('/login')
-      } catch (error: any) {
-        toast.error(error.response.data.message)
-        resetForm({})
-      }
-    },
-  })
+      }, 2000)
+    } catch (error: any) {
+      toast.error(error.response.data.message)
+    }
+  }
 
   return (
     <>
@@ -79,18 +62,10 @@ const VerifyUser = () => {
       <Container>
         <Toaster position='top-center' reverseOrder={false} />
         <Wrapper>
-          <Title>VERIFY YOUR EMAIL ADDRESS</Title>
-          <Form onSubmit={formik.handleSubmit}>
-            <Input
-              type='email'
-              name='email'
-              id='email'
-              value={formik.values.email}
-              onChange={formik.handleChange}
-              placeholder='Email'
-            />
-            <Button type='submit'>VERIFY</Button>
-          </Form>
+          <Title>Verify Your Email</Title>
+          <Button type='submit' onClick={handleClick}>
+            VERIFY EMAIL
+          </Button>
         </Wrapper>
       </Container>
       <Footer />

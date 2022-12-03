@@ -28,7 +28,7 @@ router.post(
   registerUserValidator,
   registerUser,
 );
-router.post('/verify-user/:_id', verifyUser);
+router.post('/verify-user/:token', verifyUser);
 router.post('/login', loginUserValidation, loginUser);
 router.post('/forget-password', forgetPassword);
 router.post('/reset-password', resetPassword);

@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import Product from '../models/products.model';
 import { errorResponse, successResponse } from '../helper/responseHandler';
-import dev from '../config/secrets';
 
 //POST Create a new product http://localhost:4000/api/v1/products
 export const createProduct = async (req: Request, res: Response) => {
@@ -39,7 +38,7 @@ export const updateProduct = async (req: Request, res: Response) => {
             category: req.body.category,
             price: req.body.price,
             inStock: req.body.inStock,
-            image: req.file?.filename,
+            image: req.file?.path,
           },
         },
       );
@@ -77,10 +76,10 @@ export const deleteProduct = async (req: Request, res: Response) => {
   }
 };
 
-//GET Get all products http://localhost:4000/api/v1/products
+// GET Get all products http://localhost:4000/api/v1/products
 export const getAllProducts = async (req: Request, res: Response) => {
   try {
-    const allProducts = await Product.find();
+    const allProducts = await Product.find().sort({ createdAt: -1 }).limit(5);
     return successResponse(res, 200, `Products found!`, allProducts);
   } catch (error: any) {
     return errorResponse(res, 500, error.message);

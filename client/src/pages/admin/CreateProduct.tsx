@@ -5,7 +5,6 @@ import styled from 'styled-components'
 import { createProduct } from '../../services/productServices'
 import { mobile } from '../../utils/responsive'
 import register from '../../images/register.jpg'
-import { useAppDispatch, useAppSelector } from '../../app/hook'
 
 const Container = styled.div`
   width: 100vw;
@@ -78,11 +77,10 @@ const AddProduct = () => {
         const response = await createProduct(formData)
         toast.success(response.formData.message)
         const data = response.formData
-        setTimeout(() => {
-          navigate('/admin-products', data)
-        }, 2000)
+        navigate('/admin-products', data)
       } catch (error: any) {
         toast.error(error.response.data.message)
+        resetForm({})
       }
     },
   })

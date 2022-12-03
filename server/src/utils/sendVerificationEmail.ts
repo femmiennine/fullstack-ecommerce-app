@@ -5,7 +5,7 @@ export const sendVerificationEmail = async (
   email: string,
   firstname: string,
   lastname: string,
-  _id: any,
+  token: string,
 ) => {
   try {
     const transporter = nodemailer.createTransport({
@@ -22,7 +22,7 @@ export const sendVerificationEmail = async (
       from: dev.app.auth_email,
       to: email,
       subject: 'Verification Email',
-      html: `<p> Welcome ${firstname} ${lastname}! <a href="http://localhost:3000/verify-user/${_id}"> Click for email verification </a> </p>`,
+      html: `<p> Welcome to Baby on Board, ${firstname} ${lastname}! <a href="http://localhost:3000/verify-user/${token}"> Click for email verification </a> </p>`,
     };
 
     await transporter.sendMail(mailOptions, (error, info) => {

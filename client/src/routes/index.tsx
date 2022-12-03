@@ -4,12 +4,12 @@ import AdminDashboard from '../pages/admin/AdminDashboard'
 import AdminLogin from '../pages/admin/AdminLogin'
 import AdminProducts from '../pages/admin/AdminProducts'
 import CreateProduct from '../pages/admin/CreateProduct'
+import VerifyUser from '../pages/user/VerifyUser'
 import {
   Home,
   Login,
   Profile,
   Register,
-  VerifyUser,
   ForgetPassword,
   ResetPassword,
   Error,
@@ -42,7 +42,7 @@ const UserRoute = () => {
             </>
           )}
 
-          <Route path='/verify-user/:_id' element={<VerifyUser />}></Route>
+          <Route path='/verify-user/:token' element={<VerifyUser />}></Route>
           <Route path='/forget-password' element={<ForgetPassword />}></Route>
           <Route path='/reset-password' element={<ResetPassword />}></Route>
           <Route path='*' element={<Error />}></Route>

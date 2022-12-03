@@ -1,11 +1,5 @@
 import axios from 'axios'
-import {
-  UserRegister,
-  VerifyUserType,
-  UserLogin,
-  ForgetPasswordType,
-  ResetPasswordType,
-} from '../types/index'
+import { UserRegister, UserLogin, ForgetPasswordType, ResetPasswordType } from '../types/index'
 
 const baseUrl = 'http://localhost:4000/api/v1/users/'
 
@@ -14,13 +8,13 @@ export const registerUser = async (user: UserRegister) => {
   return response.data
 }
 
-export const verifyUser = async (user: VerifyUserType) => {
-  const response = await axios.post(`${baseUrl}verify-user/:_id`, user)
+export const loginUser = async (user: UserLogin) => {
+  const response = await axios.post(`${baseUrl}login`, user)
   return response.data
 }
 
-export const loginUser = async (user: UserLogin) => {
-  const response = await axios.post(`${baseUrl}login`, user)
+export const verifyUser = async (token: string | undefined) => {
+  const response = await axios.post(`${baseUrl}verify-user/${token}`)
   return response.data
 }
 

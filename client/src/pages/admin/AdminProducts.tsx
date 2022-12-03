@@ -6,6 +6,7 @@ import { fetchProducts } from '../../features/productSlice'
 import { ProductType } from '../../types'
 import Sidebar from './components/Sidebar'
 import register from '../../images/register.jpg'
+import { baseUrl } from '../../utils/constants'
 
 const Container = styled.div`
   display: flex;
@@ -27,7 +28,6 @@ const ProductList = styled.div`
   flex-wrap: wrap;
   gap: 20px;
   width: 75vw;
-  overflow: hidden;
 `
 
 const Card = styled.div`
@@ -66,10 +66,22 @@ const AdminProducts = () => {
           <Button>CREATE PRODUCT</Button>
         </Link>
         <ProductList>
+          <table>
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Category</th>
+                <th></th>
+              </tr>
+            </thead>
+          </table>
           {products.map((product: ProductType) => {
             return (
               <Card key={product._id}>
-                <img src={`http://localhost:4000/${product.image}`} alt={product.image} />
+                <table>
+                  <thead></thead>
+                </table>
+                <img src={`${baseUrl}${product.image}`} alt={product.title} />
                 <p>Title: {product.title}</p>
                 <p>Category: {product.category}</p>
                 <p>Price: {product.price}</p>

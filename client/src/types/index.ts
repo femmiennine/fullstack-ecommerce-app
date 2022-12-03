@@ -1,5 +1,3 @@
-import { ReactNode } from 'react'
-
 export type UserRegister = {
   firstname: string
   lastname: string

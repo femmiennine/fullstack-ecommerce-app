@@ -7,6 +7,7 @@ import { sendVerificationEmail } from '../utils/sendVerificationEmail';
 import dev from '../config/secrets';
 import { sendResetPasswordEmail } from '../utils/sendResetPasswordEmail';
 import { ICustomRequest, IJWTToken } from '../middleware/auth';
+import randomString from 'random-string';
 
 //GET all data of Users http://localhost:4000/api/v1/users
 export const getAllUsers = async (req: Request, res: Response) => {
@@ -79,6 +80,11 @@ export const registerUser = async (req: Request, res: Response) => {
     if (existingUser) {
       return errorResponse(res, 400, `User already exists. Please login.`);
     }
+    const tokenString = randomString({
+      length: 64,
+      numeric: true,
+      letters: true,
+    });
     const hashPassword = await hashedPassword(password);
     const newUser = new User({
       firstname,
@@ -88,7 +94,8 @@ export const registerUser = async (req: Request, res: Response) => {
       password: hashPassword,
       isAdmin: 0,
       isVerified: 0,
-      image: req.file?.filename,
+      image: req.file?.path,
+      token: tokenString,
     });
     const userData = await newUser.save();
     if (!userData) {
@@ -99,7 +106,7 @@ export const registerUser = async (req: Request, res: Response) => {
         userData.email,
         userData.firstname,
         userData.lastname,
-        userData._id,
+        userData.token,
       );
       return successResponse(
         res,
@@ -116,21 +123,48 @@ export const registerUser = async (req: Request, res: Response) => {
 };
 
 //POST Verify User http://localhost:4000/api/v1/users/verify-user/:_id
+// export const verifyUser = async (req: Request, res: Response) => {
+//   try {
+//     const email = req.body.email;
+//     const userUpdated = await User.findOneAndUpdate(
+//       { email: email },
+//       {
+//         $set: {
+//           isVerified: 1,
+//         },
+//       },
+//     );
+//     if (userUpdated) {
+//       return successResponse(res, 201, `User verification successful!`, '');
+//     } else {
+//       return errorResponse(res, 400, `User verification unsuccessfu!`);
+//     }
+//   } catch (error: any) {
+//     return errorResponse(res, 500, error.message);
+//   }
+// };
+
 export const verifyUser = async (req: Request, res: Response) => {
   try {
-    const email = req.body.email;
-    const userUpdated = await User.findOneAndUpdate(
-      { email: email },
-      {
-        $set: {
-          isVerified: 1,
-        },
-      },
-    );
-    if (userUpdated) {
-      return successResponse(res, 201, `User verification successful!`, '');
+    const user = await User.findOne({ token: req.params.token });
+    if (!user) {
+      return errorResponse(res, 400, `Invalid link!`);
     } else {
-      return errorResponse(res, 400, `User verification unsuccessfu!`);
+      const updatedUser = await User.updateOne(
+        { token: req.params.token },
+        {
+          $set: {
+            isVerified: 1,
+            token: '',
+          },
+        },
+      );
+      return successResponse(
+        res,
+        200,
+        `User verification successful!`,
+        updatedUser,
+      );
     }
   } catch (error: any) {
     return errorResponse(res, 500, error.message);
