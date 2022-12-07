@@ -5,6 +5,8 @@ import styled from 'styled-components'
 import { createProduct } from '../../services/productServices'
 import { mobile } from '../../utils/responsive'
 import register from '../../images/register.jpg'
+import { addProduct } from '../../features/productSlice'
+import { useAppDispatch } from '../../app/hook'
 
 const Container = styled.div`
   width: 100vw;
@@ -57,6 +59,7 @@ const Button = styled.button`
 `
 
 const AddProduct = () => {
+  const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const formik = useFormik({
     initialValues: {
@@ -74,10 +77,8 @@ const AddProduct = () => {
         formData.append('category', values.category)
         formData.append('price', values.price)
         formData.append('image', values.image)
-        const response = await createProduct(formData)
-        toast.success(response.formData.message)
-        const data = response.formData
-        navigate('/admin-products', data)
+        dispatch(addProduct(formData))
+        navigate('/admin-products')
       } catch (error: any) {
         toast.error(error.response.data.message)
         resetForm({})

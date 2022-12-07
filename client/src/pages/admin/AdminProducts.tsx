@@ -8,7 +8,6 @@ import Sidebar from './components/Sidebar'
 import register from '../../images/register.jpg'
 import { baseUrl } from '../../utils/constants'
 import toast from 'react-hot-toast'
-import axios from 'axios'
 
 const Container = styled.div`
   display: flex;

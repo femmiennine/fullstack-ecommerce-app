@@ -1,7 +1,8 @@
-import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
+import toast from 'react-hot-toast'
 
-import { InitialStateProduct, ProductType } from '../types/index'
+import { InitialStateProduct } from '../types/index'
 import { baseUrl } from '../utils/constants'
 
 axios.defaults.withCredentials = true
@@ -23,12 +24,24 @@ export const fetchProducts = createAsyncThunk('data/fetchData', async () => {
   }
 })
 
+export const addProduct = createAsyncThunk('data/addProduct', async (formData: FormData) => {
+  try {
+    const response = await axios.post(`${baseUrl}api/v1/products`, formData)
+    console.log(response)
+    toast.success(response.data.data.message)
+    return response.data.data
+  } catch (error: any) {
+    toast.error(error.response.data.message)
+  }
+})
+
 export const deleteProduct = createAsyncThunk('data/deleteProduct', async (_id: string) => {
   try {
     const data = await axios.delete(`${baseUrl}api/v1/products/${_id}`)
+    toast.success(data.data.message)
     return data
   } catch (error: any) {
-    console.log(error.response.data.message)
+    toast.error(error.response.data.message)
   }
 })
 
@@ -36,7 +49,6 @@ const productSlice = createSlice({
   name: 'products',
   initialState,
   reducers: {},
-
   extraReducers(builder) {
     builder.addCase(fetchProducts.pending, (state) => {
       state.loading = true
