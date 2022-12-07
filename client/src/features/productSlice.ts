@@ -44,19 +44,6 @@ export const deleteProduct = createAsyncThunk('data/deleteProduct', async (_id: 
   }
 })
 
-// export const updateProduct = createAsyncThunk(
-//   'data/updateProduct',
-//   async (formData: FormData, productId) => {
-//     try {
-//       const response = await axios.post(`${baseUrl}api/v1/products/${productId}`, formData)
-//       console.log(response)
-//       return response.data.data
-//     } catch (error: any) {
-//       console.log(error)
-//     }
-//   },
-// )
-
 const productSlice = createSlice({
   name: 'products',
   initialState,
