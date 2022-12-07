@@ -98,8 +98,11 @@ const UpdateProduct = () => {
         formData.append('price', values.price)
         formData.append('image', values.image)
         const response = await axios.put(`${baseUrl}api/v1/products/${params.productId}`, formData)
-        return response.data.data
-        navigate('/admin-dashboard')
+        console.log(response)
+        toast.success(response.data.message)
+        setTimeout(() => {
+          navigate('/login')
+        }, 2000)
       } catch (error: any) {
         toast.error(error.response.data.message)
         resetForm({})
