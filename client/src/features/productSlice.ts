@@ -1,14 +1,20 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import axios from 'axios'
+
 import { InitialStateProduct, ProductType } from '../types/index'
+import { baseUrl } from '../utils/constants'
 
 axios.defaults.withCredentials = true
 
-const baseUrl = 'http://localhost:4000/api/v1/products'
+const initialState: InitialStateProduct = {
+  loading: false,
+  error: '',
+  products: [],
+}
 
 export const fetchProducts = createAsyncThunk('data/fetchData', async () => {
   try {
-    const response = await axios.get(`${baseUrl}`, {
+    const response = await axios.get(`${baseUrl}api/v1/products`, {
       withCredentials: true,
     })
     return response.data.data
@@ -17,36 +23,19 @@ export const fetchProducts = createAsyncThunk('data/fetchData', async () => {
   }
 })
 
-const initialState: InitialStateProduct = {
-  loading: false,
-  error: '',
-  products: [],
-}
+export const deleteProduct = createAsyncThunk('data/deleteProduct', async (_id: string) => {
+  try {
+    const data = await axios.delete(`${baseUrl}api/v1/products/${_id}`)
+    return data
+  } catch (error: any) {
+    console.log(error.response.data.message)
+  }
+})
 
 const productSlice = createSlice({
   name: 'products',
   initialState,
-  reducers: {
-    addNewProduct: (state, action: PayloadAction<ProductType>) => {
-      state.products.push(action.payload)
-    },
-
-    updateProduct: (state, action: PayloadAction<ProductType>) => {
-      const {
-        payload: { _id, title, desc, image, category, price, inStock },
-      } = action
-
-      state.products = state.products.map((product) =>
-        product._id === _id
-          ? { ...product, title, desc, image, category, price, inStock }
-          : product,
-      )
-    },
-
-    deleteBook: (state, action: PayloadAction<{ _id: string }>) => {
-      state.products = state.products.filter((product) => product._id !== action.payload._id)
-    },
-  },
+  reducers: {},
 
   extraReducers(builder) {
     builder.addCase(fetchProducts.pending, (state) => {
@@ -67,5 +56,4 @@ const productSlice = createSlice({
   },
 })
 
-export const { addNewProduct, updateProduct, deleteBook } = productSlice.actions
 export default productSlice.reducer

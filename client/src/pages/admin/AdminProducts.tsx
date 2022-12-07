@@ -2,11 +2,13 @@ import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import { useAppDispatch, useAppSelector } from '../../app/hook'
-import { fetchProducts } from '../../features/productSlice'
+import { deleteProduct, fetchProducts } from '../../features/productSlice'
 import { ProductType } from '../../types'
 import Sidebar from './components/Sidebar'
 import register from '../../images/register.jpg'
 import { baseUrl } from '../../utils/constants'
+import toast from 'react-hot-toast'
+import axios from 'axios'
 
 const Container = styled.div`
   display: flex;
@@ -57,6 +59,16 @@ const AdminProducts = () => {
     dispatch(fetchProducts())
   }, [dispatch])
 
+  const handleDelete = async (_id: any) => {
+    try {
+      dispatch(deleteProduct(_id))
+      toast.success('Product deleted successfully')
+      fetchProducts()
+    } catch (error: any) {
+      console.log(error)
+    }
+  }
+
   return (
     <Container>
       <Sidebar />
@@ -86,7 +98,13 @@ const AdminProducts = () => {
                 <p>Category: {product.category}</p>
                 <p>Price: {product.price}</p>
                 <Button>EDIT</Button>
-                <Button>DELETE</Button>
+                <button
+                  onClick={() => {
+                    handleDelete(product._id)
+                  }}
+                >
+                  DELETE
+                </button>
               </Card>
             )
           })}
