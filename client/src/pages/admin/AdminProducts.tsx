@@ -58,7 +58,7 @@ const AdminProducts = () => {
     dispatch(fetchProducts())
   }, [dispatch])
 
-  const handleDelete = async (_id: any) => {
+  const handleDelete = async (_id: string) => {
     try {
       dispatch(deleteProduct(_id))
       toast.success('Product deleted successfully')
@@ -96,14 +96,16 @@ const AdminProducts = () => {
                 <p>Title: {product.title}</p>
                 <p>Category: {product.category}</p>
                 <p>Price: {product.price}</p>
-                <Button>EDIT</Button>
-                <button
+                <Link to={`/update-product/${product.productId}`}>
+                  <Button>EDIT</Button>
+                </Link>
+                <Button
                   onClick={() => {
                     handleDelete(product._id)
                   }}
                 >
                   DELETE
-                </button>
+                </Button>
               </Card>
             )
           })}

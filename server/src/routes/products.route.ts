@@ -11,7 +11,12 @@ import productUpload from '../middleware/productFileUpload';
 const router = express.Router();
 
 router.post('/', productUpload.single('image'), isAuthorized, createProduct);
-router.put('/:_id', productUpload.single('image'), isAuthorized, updateProduct);
+router.put(
+  '/:productId',
+  productUpload.single('image'),
+  isAuthorized,
+  updateProduct,
+);
 router.delete('/:_id', isAuthorized, deleteProduct);
 router.get('/', isAuthorized, getAllProducts);
 router.get('/:_id', isAuthorized, getProductById);

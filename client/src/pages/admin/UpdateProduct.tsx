@@ -1,12 +1,12 @@
 import { useFormik } from 'formik'
 import toast, { Toaster } from 'react-hot-toast'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import styled from 'styled-components'
-import { createProduct } from '../../services/productServices'
 import { mobile } from '../../utils/responsive'
 import register from '../../images/register.jpg'
-import { addProduct } from '../../features/productSlice'
-import { useAppDispatch } from '../../app/hook'
+import { useAppSelector } from '../../app/hook'
+import axios from 'axios'
+import { baseUrl } from '../../utils/constants'
 
 const Container = styled.div`
   width: 100vw;
@@ -48,7 +48,14 @@ const Input = styled.input`
   padding: 10px;
 `
 
-const Button = styled.button`
+const FileInput = styled.input`
+  border: 1px solid black;
+  min-width: 50%;
+  margin: 20px 10px 0px 0px;
+  padding: 10px;
+`
+
+const DarkButton = styled.button`
   width: 55%;
   border: none;
   padding: 15px 20px;
@@ -58,16 +65,29 @@ const Button = styled.button`
   cursor: pointer;
 `
 
-const AddProduct = () => {
-  const dispatch = useAppDispatch()
+const LightButton = styled.button`
+  width: 55%;
+  border: 1px solid teal;
+  padding: 15px 20px;
+  margin-top: 20px;
+  background-color: white;
+  color: teal;
+  cursor: pointer;
+`
+
+const UpdateProduct = () => {
+  const params = useParams()
+  const products = useAppSelector((state) => state.product.products)
+  const existingProduct = products.filter((product) => product.productId === params.productId)
+  const { title, desc, category, price, image } = existingProduct[0]
   const navigate = useNavigate()
   const formik = useFormik({
     initialValues: {
-      title: '',
-      desc: '',
-      category: '',
-      price: '',
-      image: '',
+      title: title,
+      desc: desc,
+      category: category,
+      price: price,
+      image: image,
     },
     onSubmit: async (values, { resetForm }) => {
       try {
@@ -77,8 +97,9 @@ const AddProduct = () => {
         formData.append('category', values.category)
         formData.append('price', values.price)
         formData.append('image', values.image)
-        dispatch(addProduct(formData))
-        navigate('/admin-products')
+        const response = await axios.put(`${baseUrl}api/v1/products/${params.productId}`, formData)
+        return response.data.data
+        navigate('/admin-dashboard')
       } catch (error: any) {
         toast.error(error.response.data.message)
         resetForm({})
@@ -91,7 +112,7 @@ const AddProduct = () => {
       <Toaster position='top-center' reverseOrder={false} />
       <Wrapper>
         <Form onSubmit={formik.handleSubmit} encType='multipart/form-data'>
-          <Title>CREATE A PRODUCT</Title>
+          <Title>UPDATE A PRODUCT</Title>
           <Input
             type='title'
             name='title'
@@ -124,7 +145,7 @@ const AddProduct = () => {
             onChange={formik.handleChange}
             placeholder='Price of Product'
           />
-          <Input
+          <FileInput
             type='file'
             name='image'
             id='image'
@@ -135,10 +156,15 @@ const AddProduct = () => {
             placeholder='Confirm Password'
             accept='image/*'
           />
-          <Button type='submit'>ADD PRODUCT</Button>
+          <DarkButton type='submit'>UPDATE</DarkButton>
+          <LightButton>
+            <Link to='/admin-dashboard' style={{ textDecoration: 'none', color: 'teal' }}>
+              BACK TO DASHBOARD
+            </Link>
+          </LightButton>
         </Form>
       </Wrapper>
     </Container>
   )
 }
-export default AddProduct
+export default UpdateProduct

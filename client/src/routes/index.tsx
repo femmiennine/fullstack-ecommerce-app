@@ -13,7 +13,8 @@ import {
   ResetPassword,
   Error,
 } from '../pages/index'
-import CreateEditProducts from '../pages/admin/CreateEditProducts'
+import AddProduct from '../pages/admin/AddProduct'
+import UpdateProduct from '../pages/admin/UpdateProduct'
 
 const UserRoute = () => {
   const isLoggedIn = useAppSelector((state) => state.user.isLoggedIn)
@@ -36,7 +37,8 @@ const UserRoute = () => {
               <Route path='/profile' element={<Profile />}></Route>
               <Route path='/admin-dashboard' element={<AdminDashboard />}></Route>
               <Route path='/admin-products' element={<AdminProducts />}></Route>
-              <Route path='/create-product' element={<CreateEditProducts />}></Route>
+              <Route path='/create-product' element={<AddProduct />}></Route>
+              <Route path='/update-product/:productId' element={<UpdateProduct />}></Route>
             </>
           )}
 

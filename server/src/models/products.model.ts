@@ -1,6 +1,7 @@
 import mongoose, { Document } from 'mongoose';
 
 export type UserDocument = Document & {
+  productId: string;
   title: string;
   desc: string;
   image: string;
@@ -10,6 +11,10 @@ export type UserDocument = Document & {
 };
 
 const productSchema = new mongoose.Schema({
+  productId: {
+    type: String,
+  },
+
   title: {
     type: String,
     required: true,

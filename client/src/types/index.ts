@@ -48,10 +48,11 @@ export type InitialStateProduct = {
 
 export type ProductType = {
   _id: string
+  productId: string
   title: string
   desc: string
   image: string
   category: string
-  price: number
+  price: string
   inStock: boolean
 }

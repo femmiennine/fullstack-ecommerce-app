@@ -1,12 +1,15 @@
 import { Request, Response } from 'express';
 import Product from '../models/products.model';
 import { errorResponse, successResponse } from '../helper/responseHandler';
+import { v4 as uuidv4 } from 'uuid';
 
 //POST Create a new product http://localhost:4000/api/v1/products
 export const createProduct = async (req: Request, res: Response) => {
   try {
+    const productId = uuidv4();
     const { title, desc, category, price } = req.body;
     const product = new Product({
+      productId: productId,
       title,
       desc,
       category,
@@ -26,11 +29,10 @@ export const createProduct = async (req: Request, res: Response) => {
 //PUT Update an existing product http://localhost:4000/api/v1/products/:_id
 export const updateProduct = async (req: Request, res: Response) => {
   try {
-    const _id = req.params;
-    const product = await Product.findOne({ _id: _id });
+    const product = await Product.findOne({ productId: req.params.productId });
     if (product) {
       const updatedProduct = await Product.updateOne(
-        { _id: _id },
+        { productId: req.params.productId },
         {
           $set: {
             title: req.body.title,
