@@ -21,8 +21,8 @@ const Container = styled.div`
   flex-wrap: wrap;
   background-color: teal;
   color: white;
-  width: 15vw;
-  height: 100vh;
+  min-width: 18vw;
+  min-height: 100vh;
   padding: 20px 0;
   gap: 50px;
 `
@@ -101,14 +101,7 @@ const Sidebar = () => {
       </Profile>
 
       <Navbar>
-        <Link to='/' style={{ textDecoration: 'none', color: 'white' }}>
-          <List>
-            <HomeOutlined />
-            <p>Home</p>
-          </List>
-        </Link>
-
-        <Link to='/admin-products' style={{ textDecoration: 'none', color: 'white' }}>
+        <Link to='/admin-dashboard' style={{ textDecoration: 'none', color: 'white' }}>
           <List>
             <ChildFriendlyOutlined />
             <p>Products</p>

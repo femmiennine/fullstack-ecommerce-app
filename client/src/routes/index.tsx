@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { useAppSelector } from '../app/hook'
 import AdminDashboard from '../pages/admin/AdminDashboard'
 import AdminLogin from '../pages/admin/AdminLogin'
-import AdminProducts from '../pages/admin/AdminProducts'
 import VerifyUser from '../pages/user/VerifyUser'
 import {
   Home,
@@ -36,7 +35,6 @@ const UserRoute = () => {
             <>
               <Route path='/profile' element={<Profile />}></Route>
               <Route path='/admin-dashboard' element={<AdminDashboard />}></Route>
-              <Route path='/admin-products' element={<AdminProducts />}></Route>
               <Route path='/create-product' element={<AddProduct />}></Route>
               <Route path='/update-product/:productId' element={<UpdateProduct />}></Route>
             </>

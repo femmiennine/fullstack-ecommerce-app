@@ -45,6 +45,7 @@ export const registerUser = async (req: Request, res: Response) => {
       password: hashPassword,
       isAdmin: 0,
       isVerified: 0,
+      isBanned: false,
       image: req.file?.path,
       token: tokenString,
     });
@@ -121,6 +122,13 @@ export const loginUser = async (req: Request, res: Response) => {
         res,
         400,
         `Please verify your email address before login`,
+      );
+    }
+    if (user.isBanned === true) {
+      return errorResponse(
+        res,
+        400,
+        `Your account is temporarily blocked. Please try again later.`,
       );
     }
     const isPasswordMatched = await comparePassword(password, user.password);

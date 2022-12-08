@@ -9,6 +9,7 @@ export type UserDocument = Document & {
   password: string;
   isAdmin: number;
   isVerified: number;
+  isBanned: boolean;
   token: string;
 };
 
@@ -58,6 +59,11 @@ const userSchema = new mongoose.Schema({
   isAdmin: {
     type: Number,
     default: 0,
+  },
+
+  isBanned: {
+    type: Boolean,
+    default: false,
   },
 
   token: {

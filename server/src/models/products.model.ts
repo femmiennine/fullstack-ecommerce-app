@@ -42,20 +42,20 @@ const productSchema = new mongoose.Schema({
     required: true,
   },
 
-  // quantity: {
-  //   type: Number,
-  //   required: true,
-  // },
+  quantity: {
+    type: Number,
+    required: true,
+  },
 
   // shipping: {
   //   type: Boolean,
   //   required: true,
   // },
 
-  inStock: {
-    type: Boolean,
-    default: true,
-  },
+  // inStock: {
+  //   type: Boolean,
+  //   default: true,
+  // },
 
   createdAt: {
     type: Date,

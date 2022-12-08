@@ -31,6 +31,13 @@ export const loginAdmin = async (req: Request, res: Response) => {
     if (admin.isAdmin === 0) {
       return errorResponse(res, 401, `Forbidden Route! Unauthorized login.`);
     }
+    if (admin.isBanned === true) {
+      return errorResponse(
+        res,
+        401,
+        `Your account is temporarily blocked. Please try again later.`,
+      );
+    }
     const isPasswordMatched = await comparePassword(password, admin.password);
     if (!isPasswordMatched) {
       return errorResponse(res, 406, `Invalid Credentials`);
@@ -88,6 +95,40 @@ export const logoutAdmin = async (req: Request, res: Response) => {
       res.clearCookie(`${(decoded as IJWTToken).id}`);
     });
     return successResponse(res, 200, `Admin logged out successfully`, '');
+  } catch (error: any) {
+    return errorResponse(res, 500, error.message);
+  }
+};
+
+//POST Logout User http://localhost:4000/api/v1/admin/user-access/:_id
+export const userAccess = async (req: Request, res: Response) => {
+  try {
+    const userId = await User.findById({ _id: req.params._id });
+    if (!userId) {
+      return errorResponse(res, 404, 'User does not exist');
+    }
+    if (userId.isBanned === false) {
+      const blockUser = await User.updateOne(
+        { _id: req.params._id },
+        {
+          $set: {
+            isBanned: true,
+          },
+        },
+      );
+      return successResponse(res, 200, `User blocked successfully`, blockUser);
+    } else {
+      const unBlockUser = await User.updateOne(
+        { _id: req.params._id },
+        { $set: { isBanned: false } },
+      );
+      return successResponse(
+        res,
+        200,
+        `User unblocked successfully`,
+        unBlockUser,
+      );
+    }
   } catch (error: any) {
     return errorResponse(res, 500, error.message);
   }
