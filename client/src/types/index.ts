@@ -55,4 +55,6 @@ export type ProductType = {
   category: string
   price: string
   inStock: boolean
+  delete: string
+  edit: string
 }
