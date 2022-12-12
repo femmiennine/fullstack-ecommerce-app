@@ -6,40 +6,57 @@ import { deleteProduct, fetchProducts } from '../../../features/productSlice'
 import { ProductType } from '../../../types'
 import { baseUrl } from '../../../utils/constants'
 import toast from 'react-hot-toast'
-import { BorderColor, Delete } from '@material-ui/icons'
-import { getSuggestedQuery } from '@testing-library/react'
+import { BorderColorOutlined, DeleteOutlined } from '@material-ui/icons'
 
 const Container = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 20px;
+  margin: 0 auto;
+`
+
+const Title = styled.h1`
+  margin: 20px;
 `
 
 const ProductList = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
+  justify-content: flex-start;
   margin: 0 auto;
   flex-wrap: wrap;
-  gap: 20px;
-  width: 75vw;
+  width: 80vw;
 `
 
 const Input = styled.input`
-  width: 100vh;
+  width: 50%;
   height: 1.5rem;
+  padding: 5px;
+  margin-bottom: 20px;
+  border: 1.5px solid teal;
+`
+
+const Table = styled.table`
+  width: 100%;
+  padding: 30px;
+  border-radius: 10px;
+`
+
+const TableHead = styled.tr`
+  gap: 1rem;
+  border-bottom: 1px solid grey;
+  text-align: left;
 `
 
 const Image = styled.img`
-  width: 20px;
+  width: 50px;
 `
 
 const Button = styled.button`
-  width: 100%;
+  width: 20%;
   border: none;
   padding: 15px 20px;
-  margin-top: 20px;
   background-color: teal;
   color: white;
   cursor: pointer;
@@ -77,22 +94,22 @@ const AdminProducts = () => {
 
   return (
     <Container>
-      <h1>Baby on Board Products</h1>
-      <Link to='/create-product'>
-        <Button>CREATE NEW PRODUCT</Button>
-      </Link>
+      <Title>Baby on Board Products</Title>
       <ProductList>
-        <div>
-          <Input value={search} onChange={handleChange} placeholder='Search products here...' />
-        </div>
-        <table>
-          <tr>
-            <th>Image</th>
+        <Link to='/create-product'>
+          <Button>CREATE NEW PRODUCT</Button>
+        </Link>
+        <Input value={search} onChange={handleChange} placeholder='Search products here...' />
+        <Table>
+          <TableHead>
             <th>Product</th>
+            <th>Name</th>
             <th>Category</th>
             <th>Price</th>
-            <th>Description</th>
-          </tr>
+            <th>Quantity</th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </TableHead>
           {products
             .filter((product) => product.title.toLowerCase().includes(search))
             .map((product: ProductType) => {
@@ -104,10 +121,10 @@ const AdminProducts = () => {
                   <td>{product.title}</td>
                   <td>{product.category}</td>
                   <td>{product.price}</td>
-                  <td>{product.desc}</td>
+                  <td>{product.quantity}</td>
                   <td>
                     <Link to={`/update-product/${product.productId}`}>
-                      <BorderColor />
+                      <BorderColorOutlined style={{ color: 'teal' }} />
                     </Link>
                   </td>
                   <td>
@@ -116,14 +133,13 @@ const AdminProducts = () => {
                         handleDelete(product._id)
                       }}
                     >
-                      <Delete />
+                      <DeleteOutlined style={{ color: 'teal' }} />
                     </TrashButton>
                   </td>
-                  <td></td>
                 </tr>
               )
             })}
-        </table>
+        </Table>
       </ProductList>
     </Container>
   )

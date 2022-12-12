@@ -54,7 +54,7 @@ export type ProductType = {
   image: string
   category: string
   price: string
-  inStock: boolean
-  delete: string
-  edit: string
+  quantity: string
+  // shipping: boolean
+  // inStock: boolean
 }

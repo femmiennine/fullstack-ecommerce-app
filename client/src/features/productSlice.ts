@@ -27,7 +27,7 @@ export const addProduct = createAsyncThunk('data/addProduct', async (formData: F
   try {
     const response = await axios.post(`${baseUrl}api/v1/products`, formData)
     console.log(response)
-    toast.success(response.data.data.message)
+    toast.success(response.data.message)
     return response.data.data
   } catch (error: any) {
     toast.error(error.response.data.message)

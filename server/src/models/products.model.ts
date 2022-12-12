@@ -14,7 +14,6 @@ const productSchema = new mongoose.Schema({
   productId: {
     type: String,
   },
-
   title: {
     type: String,
     required: true,
@@ -46,16 +45,6 @@ const productSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
-
-  // shipping: {
-  //   type: Boolean,
-  //   required: true,
-  // },
-
-  // inStock: {
-  //   type: Boolean,
-  //   default: true,
-  // },
 
   createdAt: {
     type: Date,

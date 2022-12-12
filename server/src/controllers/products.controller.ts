@@ -7,19 +7,24 @@ import { v4 as uuidv4 } from 'uuid';
 export const createProduct = async (req: Request, res: Response) => {
   try {
     const productId = uuidv4();
-    const { title, desc, category, price } = req.body;
+    const { title, desc, category, price, quantity } = req.body;
     const product = new Product({
       productId: productId,
       title,
       desc,
       category,
       price,
-      inStock: true,
+      quantity,
       image: req.file?.path,
     });
     const newProduct = await product.save();
     if (newProduct) {
-      successResponse(res, 201, 'Products successfully created', newProduct);
+      successResponse(
+        res,
+        201,
+        'Product successfully added to list',
+        newProduct,
+      );
     }
   } catch (error: any) {
     return errorResponse(res, 500, error.message);
@@ -39,7 +44,7 @@ export const updateProduct = async (req: Request, res: Response) => {
             desc: req.body.desc,
             category: req.body.category,
             price: req.body.price,
-            inStock: req.body.inStock,
+            quantity: req.body.quantity,
             image: req.file?.path,
           },
         },
@@ -81,7 +86,7 @@ export const deleteProduct = async (req: Request, res: Response) => {
 // GET Get all products http://localhost:4000/api/v1/products
 export const getAllProducts = async (req: Request, res: Response) => {
   try {
-    const allProducts = await Product.find().sort({ createdAt: -1 }).limit(5);
+    const allProducts = await Product.find().sort({ createdAt: -1 });
     return successResponse(res, 200, `Products found!`, allProducts);
   } catch (error: any) {
     return errorResponse(res, 500, error.message);

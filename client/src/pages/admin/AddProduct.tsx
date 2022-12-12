@@ -4,8 +4,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { mobile } from '../../utils/responsive'
 import register from '../../images/register.jpg'
+import { useAppDispatch, useAppSelector } from '../../app/hook'
 import { addProduct } from '../../features/productSlice'
-import { useAppDispatch } from '../../app/hook'
 
 const Container = styled.div`
   width: 100vw;
@@ -47,13 +47,6 @@ const Input = styled.input`
   padding: 10px;
 `
 
-const FileInput = styled.input`
-  border: 1px solid black;
-  min-width: 50%;
-  margin: 20px 10px 0px 0px;
-  padding: 10px;
-`
-
 const DarkButton = styled.button`
   width: 55%;
   border: none;
@@ -83,6 +76,7 @@ const AddProduct = () => {
       desc: '',
       category: '',
       price: '',
+      quantity: '',
       image: '',
     },
     onSubmit: async (values, { resetForm }) => {
@@ -92,12 +86,17 @@ const AddProduct = () => {
         formData.append('desc', values.desc)
         formData.append('category', values.category)
         formData.append('price', values.price)
+        formData.append('quantity', values.quantity)
         formData.append('image', values.image)
         dispatch(addProduct(formData))
-        navigate('/admin-products')
+        setTimeout(() => {
+          navigate('/admin-dashboard')
+        }, 2000)
       } catch (error: any) {
         toast.error(error.response.data.message)
-        resetForm({})
+        {
+          resetForm
+        }
       }
     },
   })
@@ -140,7 +139,15 @@ const AddProduct = () => {
             onChange={formik.handleChange}
             placeholder='Price of Product'
           />
-          <FileInput
+          <Input
+            type='quantity'
+            name='quantity'
+            id='quantity'
+            value={formik.values.quantity}
+            onChange={formik.handleChange}
+            placeholder='Quantity of Products Available'
+          />
+          <Input
             type='file'
             name='image'
             id='image'
