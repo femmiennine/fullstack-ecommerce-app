@@ -1,6 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import {
+  HomeOutlined,
   ChildFriendlyOutlined,
   PersonOutlineOutlined,
   LocalMallOutlined,
@@ -118,6 +119,12 @@ const Sidebar = () => {
       </Profile>
 
       <Navbar>
+        <Link to='/' style={{ textDecoration: 'none', color: 'white' }}>
+          <List>
+            <HomeOutlined />
+            <p>Home</p>
+          </List>
+        </Link>
         <Link to='/admin-dashboard' style={{ textDecoration: 'none', color: 'white' }}>
           <List>
             <ChildFriendlyOutlined />

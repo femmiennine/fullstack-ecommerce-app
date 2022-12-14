@@ -1,8 +1,7 @@
 import styled from 'styled-components'
 import { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../../app/hook'
-import { baseUrl } from '../../../utils/constants'
-import { BlockOutlined } from '@mui/icons-material'
+import { BlockOutlined, Search } from '@mui/icons-material'
 import { fetchUsers } from '../../../features/userSlice'
 import { UserType } from '../../../types'
 import axios from 'axios'
@@ -19,7 +18,7 @@ const Title = styled.h1`
   margin: 20px;
 `
 
-const ProductList = styled.div`
+const UserList = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -28,12 +27,21 @@ const ProductList = styled.div`
   width: 80vw;
 `
 
-const Input = styled.input`
-  width: 50%;
-  height: 1.5rem;
+const SearchContainer = styled.div`
+  border: 0.5px solid lightgray;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 25px;
   padding: 5px;
-  margin-bottom: 20px;
-  border: 1.5px solid teal;
+  width: 50%;
+  background-color: white;
+`
+
+const Input = styled.input`
+  border: none;
+  width: 100%;
+  padding: 5px; ;
 `
 
 const Table = styled.table`
@@ -48,20 +56,7 @@ const TableHead = styled.tr`
   text-align: left;
 `
 
-const Image = styled.img`
-  width: 50px;
-`
-
 const Button = styled.button`
-  width: 20%;
-  border: none;
-  padding: 15px 20px;
-  background-color: teal;
-  color: white;
-  cursor: pointer;
-`
-
-const TrashButton = styled.button`
   border: none;
   background-color: none;
   color: teal;
@@ -93,8 +88,11 @@ const UserTableList = () => {
   return (
     <Container>
       <Title>Baby on Board Products</Title>
-      <ProductList>
-        <Input value={search} onChange={handleChange} placeholder='Search a user here...' />
+      <UserList>
+        <SearchContainer>
+          <Input value={search} onChange={handleChange} placeholder='Search' />
+          <Search style={{ color: 'gray', fontSize: 16 }} />
+        </SearchContainer>
         <Table>
           <TableHead>
             <th>Firstname</th>
@@ -113,7 +111,7 @@ const UserTableList = () => {
                   <td>{user.email}</td>
                   <td>{user.phone}</td>
                   <td>
-                    <TrashButton
+                    <Button
                       onClick={() => {
                         handleUserAccess(user._id)
                       }}
@@ -123,13 +121,13 @@ const UserTableList = () => {
                       ) : (
                         <BlockOutlined style={{ color: 'red' }} />
                       )}
-                    </TrashButton>
+                    </Button>
                   </td>
                 </tr>
               )
             })}
         </Table>
-      </ProductList>
+      </UserList>
     </Container>
   )
 }

@@ -47,7 +47,7 @@ export type ProductType = {
   price: string
   quantity: string
   // shipping: boolean
-  // inStock: boolean
+  inStock: boolean
 }
 
 export type InitialUserType = {

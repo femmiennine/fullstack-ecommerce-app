@@ -15,6 +15,7 @@ export const createProduct = async (req: Request, res: Response) => {
       category,
       price,
       quantity,
+      inStock: true,
       image: req.file?.path,
     });
     const newProduct = await product.save();
@@ -45,6 +46,7 @@ export const updateProduct = async (req: Request, res: Response) => {
             category: req.body.category,
             price: req.body.price,
             quantity: req.body.quantity,
+            inStock: req.body.inStock,
             image: req.file?.path,
           },
         },

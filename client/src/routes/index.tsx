@@ -15,6 +15,8 @@ import {
 import AddProduct from '../pages/admin/AddProduct'
 import UpdateProduct from '../pages/admin/UpdateProduct'
 import Users from '../pages/admin/Users'
+import ProductList from '../pages/product/ProductList'
+import Product from '../pages/product/Product'
 
 const UserRoute = () => {
   const isLoggedIn = useAppSelector((state) => state.user.isLoggedIn)
@@ -23,15 +25,16 @@ const UserRoute = () => {
       <Routes>
         <Route>
           <Route path='/' element={<Home />}></Route>
-
           {!isLoggedIn && (
             <>
               <Route path='/register' element={<Register />}></Route>
               <Route path='/login' element={<Login />}></Route>
               <Route path='/admin-login' element={<AdminLogin />}></Route>
+              <Route path='/verify-user/:token' element={<VerifyUser />}></Route>
+              <Route path='/forget-password' element={<ForgetPassword />}></Route>
+              <Route path='/reset-password' element={<ResetPassword />}></Route>
             </>
           )}
-
           {isLoggedIn && (
             <>
               <Route path='/profile' element={<Profile />}></Route>
@@ -41,10 +44,8 @@ const UserRoute = () => {
               <Route path='/userslist' element={<Users />}></Route>
             </>
           )}
-
-          <Route path='/verify-user/:token' element={<VerifyUser />}></Route>
-          <Route path='/forget-password' element={<ForgetPassword />}></Route>
-          <Route path='/reset-password' element={<ResetPassword />}></Route>
+          <Route path='/productslist' element={<ProductList />}></Route>
+          <Route path='/product/:_id' element={<Product />}></Route>
           <Route path='*' element={<Error />}></Route>
         </Route>
       </Routes>

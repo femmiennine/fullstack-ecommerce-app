@@ -106,7 +106,7 @@ const Navbar = () => {
           <Link style={{ textDecoration: 'none', color: 'teal' }} to='/'>
             <MenuItem>HOME</MenuItem>
           </Link>
-          <Link style={{ textDecoration: 'none', color: 'teal' }} to='/products'>
+          <Link style={{ textDecoration: 'none', color: 'teal' }} to='/productslist'>
             <MenuItem>PRODUCTS</MenuItem>
           </Link>
 

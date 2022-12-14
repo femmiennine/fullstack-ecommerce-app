@@ -18,7 +18,7 @@ router.put(
   updateProduct,
 );
 router.delete('/:_id', isAuthorized, deleteProduct);
-router.get('/', isAuthorized, getAllProducts);
-router.get('/:_id', isAuthorized, getProductById);
+router.get('/', getAllProducts);
+router.get('/:_id', getProductById);
 
 export default router;

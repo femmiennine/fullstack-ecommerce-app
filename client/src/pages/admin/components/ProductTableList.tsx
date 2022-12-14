@@ -6,7 +6,7 @@ import { deleteProduct, fetchProducts } from '../../../features/productSlice'
 import { ProductType } from '../../../types'
 import { baseUrl } from '../../../utils/constants'
 import toast from 'react-hot-toast'
-import { BorderColorOutlined, DeleteOutlined } from '@material-ui/icons'
+import { BorderColorOutlined, DeleteOutlined, Search } from '@material-ui/icons'
 
 const Container = styled.div`
   display: flex;
@@ -29,12 +29,21 @@ const ProductList = styled.div`
   width: 80vw;
 `
 
-const Input = styled.input`
-  width: 50%;
-  height: 1.5rem;
+const SearchContainer = styled.div`
+  border: 0.5px solid lightgray;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-left: 25px;
   padding: 5px;
-  margin-bottom: 20px;
-  border: 1.5px solid teal;
+  width: 50%;
+  background-color: white;
+`
+
+const Input = styled.input`
+  border: none;
+  width: 100%;
+  padding: 5px; ;
 `
 
 const Table = styled.table`
@@ -60,6 +69,7 @@ const Button = styled.button`
   background-color: teal;
   color: white;
   cursor: pointer;
+  margin-left: 25px;
 `
 
 const TrashButton = styled.button`
@@ -94,12 +104,17 @@ const AdminProducts = () => {
 
   return (
     <Container>
-      <Title>Baby on Board Products</Title>
+      <Title>Baby on Board Product List</Title>
       <ProductList>
-        <Link to='/create-product'>
-          <Button>CREATE NEW PRODUCT</Button>
-        </Link>
-        <Input value={search} onChange={handleChange} placeholder='Search products here...' />
+        <div>
+          <Link to='/create-product'>
+            <Button>CREATE NEW PRODUCT</Button>
+          </Link>
+        </div>
+        <SearchContainer>
+          <Input value={search} onChange={handleChange} placeholder='Search' />
+          <Search style={{ color: 'gray', fontSize: 16 }} />
+        </SearchContainer>
         <Table>
           <TableHead>
             <th>Product</th>

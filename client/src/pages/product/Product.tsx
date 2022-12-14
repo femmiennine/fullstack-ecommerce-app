@@ -1,163 +1,145 @@
 import { Add, Remove } from '@material-ui/icons'
+import axios from 'axios'
+import { useEffect, useState } from 'react'
+import { Link, useParams } from 'react-router-dom'
 import styled from 'styled-components'
-import { Announcement, Newsletter } from '../../components/index'
-import { mobile } from '../../utils/responsive'
+import { Announcement, Navbar } from '../../components/index'
+import { ProductType } from '../../types'
+import { baseUrl } from '../../utils/constants'
+import register from '../../images/register.jpg'
+import { ArrowBackOutlined } from '@mui/icons-material'
 
-const Container = styled.div``
-
-const Wrapper = styled.div`
-  padding: 50px;
+const Container = styled.div`
+  background: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)),
+    url(${register}) center;
+  background-size: cover;
+  width: 100vw;
+  height: 100vh;
   display: flex;
-  ${mobile({ padding: '10px', flexDirection: 'column' })}
+  align-items: center;
+  justify-content: center;
 `
 
-const ImgContainer = styled.div`
-  flex: 1;
+const Card = styled.div`
+  background-color: white;
+  display: flex;
+  align-items: center;
+  gap: 50px;
+  width: 60%;
+  padding: 20px;
+`
+
+const ImageContainer = styled.div`
+  width: 20vw;
 `
 
 const Image = styled.img`
   width: 100%;
-  height: 90vh;
-  object-fit: cover;
-  ${mobile({ height: '40vh' })}
+  height: 100%;
 `
 
-const InfoContainer = styled.div`
-  flex: 1;
-  padding: 0px 50px;
-  ${mobile({ padding: '10px' })}
-`
-
-const Title = styled.h1`
-  font-weight: 200;
-`
-
-const Desc = styled.p`
-  margin: 20px 0px;
-`
-
-const Price = styled.span`
-  font-weight: 100;
-  font-size: 40px;
-`
-
-const FilterContainer = styled.div`
-  width: 50%;
-  margin: 30px 0px;
+const DetailContainer = styled.div`
   display: flex;
-  justify-content: space-between;
-  ${mobile({ width: '100%' })}
+  flex-direction: column;
+  gap: 2rem;
 `
 
-const Filter = styled.div`
+const Title = styled.h2`
+  color: teal;
+`
+
+const Category = styled.p`
+  font-style: italic;
+  color: grey;
+`
+
+const Stock = styled.span`
+  font-size: 0.8rem;
+  font-style: italic;
+  color: grey;
+`
+
+const Price = styled.h4`
+  color: teal;
+`
+const ButtonContainer = styled.div`
   display: flex;
-  align-items: center;
+  flex-direction: column;
 `
-
-const FilterTitle = styled.span`
-  font-size: 20px;
-  font-weight: 200;
-`
-
-const FilterColor = styled.div`
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background-color: ${(props) => props.color};
-  margin: 0px 5px;
-  cursor: pointer;
-`
-
-const FilterSize = styled.select`
-  margin-left: 10px;
-  padding: 5px;
-`
-
-const FilterSizeOption = styled.option``
-
-const AddContainer = styled.div`
-  width: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  ${mobile({ width: '100%' })}
-`
-
-const AmountContainer = styled.div`
-  display: flex;
-  align-items: center;
-  font-weight: 700;
-`
-
-const Amount = styled.span`
-  width: 30px;
-  height: 30px;
-  border-radius: 10px;
-  border: 1px solid teal;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0px 5px;
-`
-
 const Button = styled.button`
-  padding: 15px;
-  border: 2px solid teal;
-  background-color: white;
+  width: 40%;
+  border: none;
+  padding: 15px 20px;
+  background-color: teal;
+  color: white;
   cursor: pointer;
-  font-weight: 500;
-  &:hover {
-    background-color: #f8f4f4;
-  }
+`
+
+const LightButton = styled.button`
+  width: 40%;
+  border: 1px solid teal;
+  padding: 15px 20px;
+  margin-top: 20px;
+  background-color: white;
+  color: teal;
+  cursor: pointer;
 `
 
 const Product = () => {
+  const params = useParams()
+  const [product, setProduct] = useState<ProductType>()
+
+  const fetchProductById = async (_id: string | undefined) => {
+    try {
+      const response = await axios.get(`http://localhost:4000/api/v1/products/${params._id}`)
+      console.log(response)
+      setProduct(response.data.data)
+    } catch (error: any) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    fetchProductById(params._id)
+  }, [])
+
   return (
-    <Container>
+    <>
+      <Navbar />
       <Announcement />
-      <Wrapper>
-        <ImgContainer>
-          <Image src='https://i.ibb.co/S6qMxwr/jean.jpg' />
-        </ImgContainer>
-        <InfoContainer>
-          <Title>Denim Jumpsuit</Title>
-          <Desc>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec venenatis, dolor in
-            finibus malesuada, lectus ipsum porta nunc, at iaculis arcu nisi sed mauris. Nulla
-            fermentum vestibulum ex, eget tristique tortor pretium ut. Curabitur elit justo,
-            consequat id condimentum ac, volutpat ornare.
-          </Desc>
-          <Price>$ 20</Price>
-          <FilterContainer>
-            <Filter>
-              <FilterTitle>Color</FilterTitle>
-              <FilterColor color='black' />
-              <FilterColor color='darkblue' />
-              <FilterColor color='gray' />
-            </Filter>
-            <Filter>
-              <FilterTitle>Size</FilterTitle>
-              <FilterSize>
-                <FilterSizeOption>XS</FilterSizeOption>
-                <FilterSizeOption>S</FilterSizeOption>
-                <FilterSizeOption>M</FilterSizeOption>
-                <FilterSizeOption>L</FilterSizeOption>
-                <FilterSizeOption>XL</FilterSizeOption>
-              </FilterSize>
-            </Filter>
-          </FilterContainer>
-          <AddContainer>
-            <AmountContainer>
-              <Remove />
-              <Amount>1</Amount>
-              <Add />
-            </AmountContainer>
-            <Button>ADD TO CART</Button>
-          </AddContainer>
-        </InfoContainer>
-      </Wrapper>
-      <Newsletter />
-    </Container>
+      <Container>
+        <Card>
+          <ImageContainer>
+            <Image src={`${baseUrl}${product?.image}`} />
+          </ImageContainer>
+          <DetailContainer>
+            <div>
+              <Title>{product?.title}</Title>
+              <Category>{product?.category}</Category>
+            </div>
+            <div>
+              <p>{product?.desc}</p>
+            </div>
+            <div>
+              {product?.inStock ? (
+                <Stock>{product?.quantity} In Stock</Stock>
+              ) : (
+                <Stock>Out of Stock</Stock>
+              )}
+              <Price>{product?.price}SEK</Price>
+            </div>
+            <ButtonContainer>
+              <Link to='/cart'>
+                <Button>ADD TO CART</Button>
+              </Link>
+              <Link to='/productslist'>
+                <LightButton>BACK TO PRODUCTS</LightButton>
+              </Link>
+            </ButtonContainer>
+          </DetailContainer>
+        </Card>
+      </Container>
+    </>
   )
 }
 
