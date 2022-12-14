@@ -14,6 +14,7 @@ import {
 } from '../pages/index'
 import AddProduct from '../pages/admin/AddProduct'
 import UpdateProduct from '../pages/admin/UpdateProduct'
+import Users from '../pages/admin/Users'
 
 const UserRoute = () => {
   const isLoggedIn = useAppSelector((state) => state.user.isLoggedIn)
@@ -37,6 +38,7 @@ const UserRoute = () => {
               <Route path='/admin-dashboard' element={<AdminDashboard />}></Route>
               <Route path='/create-product' element={<AddProduct />}></Route>
               <Route path='/update-product/:productId' element={<UpdateProduct />}></Route>
+              <Route path='/userslist' element={<Users />}></Route>
             </>
           )}
 

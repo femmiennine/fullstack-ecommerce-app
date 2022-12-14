@@ -26,15 +26,6 @@ export type ResetPasswordType = {
   confirmPassword: string
 }
 
-export type UserProfileType = {
-  firstname: string
-  lastname: string
-  email: string
-  phone: string
-  password: string
-  image: string
-}
-
 export type AdminLoginType = {
   email: string
   password: string
@@ -57,4 +48,22 @@ export type ProductType = {
   quantity: string
   // shipping: boolean
   // inStock: boolean
+}
+
+export type InitialUserType = {
+  isLoggedIn: boolean
+  loading: boolean
+  error: string
+  users: UserType[]
+}
+
+export type UserType = {
+  _id: string
+  firstname: string
+  lastname: string
+  email: string
+  phone: string
+  password: string
+  image: string
+  isBanned: boolean
 }

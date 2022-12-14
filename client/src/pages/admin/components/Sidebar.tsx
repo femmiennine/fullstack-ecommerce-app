@@ -1,7 +1,6 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import {
-  HomeOutlined,
   ChildFriendlyOutlined,
   PersonOutlineOutlined,
   LocalMallOutlined,
@@ -13,7 +12,9 @@ import avatar from '../../../images/blank-profile.png'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import toast from 'react-hot-toast'
-import { UserProfileType } from '../../../types/index'
+import { UserType } from '../../../types/index'
+import { useAppDispatch } from '../../../app/hook'
+import { logout } from '../../../features/userSlice'
 
 const Container = styled.div`
   display: flex;
@@ -70,7 +71,9 @@ const List = styled.li`
 `
 
 const Sidebar = () => {
-  const [user, setUser] = useState<UserProfileType>()
+  const navigate = useNavigate()
+  const dispatch = useAppDispatch()
+  const [user, setUser] = useState<UserType>()
   const sendRequest = async () => {
     try {
       const response = await axios.get('http://localhost:4000/api/v1/admin/admin-dashboard', {
@@ -87,6 +90,20 @@ const Sidebar = () => {
   useEffect(() => {
     sendRequest()
   }, [])
+
+  const handleLogout = async () => {
+    try {
+      const response = await axios.post('http://localhost:4000/api/v1/users/logout', {
+        withCredentials: true,
+      })
+      if (response.status === 200) {
+        dispatch(logout())
+        navigate('/admin-login')
+      }
+    } catch (error: any) {
+      console.log(error)
+    }
+  }
 
   return (
     <Container>
@@ -108,7 +125,7 @@ const Sidebar = () => {
           </List>
         </Link>
 
-        <Link to='/users' style={{ textDecoration: 'none', color: 'white' }}>
+        <Link to='/userslist' style={{ textDecoration: 'none', color: 'white' }}>
           <List>
             <PersonOutlineOutlined />
             <p>Users</p>
@@ -129,7 +146,11 @@ const Sidebar = () => {
           </List>
         </Link>
 
-        <Link to='/admin-login' style={{ textDecoration: 'none', color: 'white' }}>
+        <Link
+          to='/admin-login'
+          style={{ textDecoration: 'none', color: 'white' }}
+          onClick={handleLogout}
+        >
           <List>
             <ExitToAppOutlined />
             <p>Logout</p>

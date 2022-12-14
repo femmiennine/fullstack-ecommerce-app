@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import axios from 'axios'
 import { Toaster, toast } from 'react-hot-toast'
-import { UserProfileType } from '../../types'
+import { UserType } from '../../types'
 import userprofile from '../../images/userprofile.jpg'
 import { mobile } from '../../utils/responsive'
 import { Navbar } from '../../components'
@@ -55,7 +55,7 @@ const Button = styled.button`
 `
 
 const Profile = () => {
-  const [user, setUser] = useState<UserProfileType>()
+  const [user, setUser] = useState<UserType>()
   const sendRequest = async () => {
     try {
       const response = await axios.get('http://localhost:4000/api/v1/users/profile', {
