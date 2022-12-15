@@ -7,6 +7,7 @@ import { ProductType } from '../../../types'
 import { baseUrl } from '../../../utils/constants'
 import toast from 'react-hot-toast'
 import { BorderColorOutlined, DeleteOutlined, Search } from '@material-ui/icons'
+import Error from '../../../pages/Error'
 
 const Container = styled.div`
   display: flex;
@@ -81,6 +82,8 @@ const TrashButton = styled.button`
 const AdminProducts = () => {
   const dispatch = useAppDispatch()
   const products = useAppSelector((state) => state.product.products)
+  const loading = useAppSelector((state) => state.product.loading)
+  const error = useAppSelector((state) => state.product.error)
   const [search, setSearch] = useState<string>('')
 
   useEffect(() => {
@@ -104,6 +107,8 @@ const AdminProducts = () => {
 
   return (
     <Container>
+      {error && <Error />}
+      {loading && <p>Loading...</p>}
       <Title>Baby on Board Product List</Title>
       <ProductList>
         <div>

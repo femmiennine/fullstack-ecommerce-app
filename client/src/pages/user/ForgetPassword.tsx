@@ -2,13 +2,14 @@ import styled from 'styled-components'
 import { useFormik } from 'formik'
 import { Toaster, toast } from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
-import { forgetPassword } from '../../services/userServices'
+import { forgetPassword } from '../../features/userSlice'
 import { ForgetPasswordType } from '../../types/index'
 import { validationSchema } from '../../validator/forgetPassword.schema'
 import { mobile } from '../../utils/responsive'
 import forget from '../../images/forget.jpg'
 import Footer from '../../components/Footer'
 import { Navbar } from '../../components'
+import { useAppDispatch } from '../../app/hook'
 
 const Container = styled.div`
   width: 100vw;
@@ -60,6 +61,7 @@ const Instruction = styled.p`
 `
 
 const ForgetPassword = () => {
+  const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const formik = useFormik({
     initialValues: {
@@ -68,9 +70,10 @@ const ForgetPassword = () => {
     validationSchema,
     onSubmit: async (user: ForgetPasswordType, { resetForm }) => {
       try {
-        const response = await forgetPassword(user)
-        toast.success(response.message)
-        navigate('/')
+        dispatch(forgetPassword(user))
+        setTimeout(() => {
+          navigate('/')
+        }, 2000)
       } catch (error: any) {
         toast.error(error.response.data.message)
         resetForm({})

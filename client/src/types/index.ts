@@ -35,6 +35,7 @@ export type InitialStateProduct = {
   loading: boolean
   error: string
   products: ProductType[]
+  productsSearched: ProductType[]
 }
 
 export type ProductType = {

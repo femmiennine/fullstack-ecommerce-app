@@ -3,10 +3,9 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
 import { Toaster, toast } from 'react-hot-toast'
 import { useAppDispatch } from '../../app/hook'
-import { login } from '../../features/userSlice'
+import { login, loginAdmin } from '../../features/userSlice'
 import { validationSchema } from '../../validator/login.schema'
 import { AdminLoginType } from '../../types/index'
-import { loginAdmin } from '../../services/adminServices'
 import { mobile } from '../../utils/responsive'
 import admin from '../../images/admin.jpg'
 import Footer from '../../components/Footer'
@@ -63,8 +62,8 @@ const Line = styled.p`
 `
 
 const AdminLogin = () => {
-  const navigate = useNavigate()
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -73,10 +72,11 @@ const AdminLogin = () => {
     validationSchema,
     onSubmit: async (admin: AdminLoginType, { resetForm }) => {
       try {
-        const response = await loginAdmin(admin)
-        toast.success(response.message)
+        dispatch(loginAdmin(admin))
         dispatch(login())
-        navigate('/admin-dashboard')
+        setTimeout(() => {
+          navigate('/admin-dashboard')
+        }, 2000)
       } catch (error: any) {
         toast.error(error.response.data.message)
         resetForm({})

@@ -10,6 +10,7 @@ const initialState: InitialStateProduct = {
   loading: false,
   error: '',
   products: [],
+  productsSearched: [],
 }
 
 export const fetchProducts = createAsyncThunk('data/fetchData', async () => {
@@ -47,7 +48,30 @@ export const deleteProduct = createAsyncThunk('data/deleteProduct', async (_id: 
 const productSlice = createSlice({
   name: 'products',
   initialState,
-  reducers: {},
+  reducers: {
+    search: (state, action) => {
+      state.productsSearched = state.products.filter((product) => {
+        const query = product.title.toLowerCase().includes(action.payload.toLowerCase())
+
+        if (!action.payload) {
+          return state.products
+        } else if (query) {
+          return product
+        }
+      })
+    },
+    filter: (state, action) => {
+      state.productsSearched = state.products.filter((product) => {
+        const query = product.category.toLowerCase().includes(action.payload.toLowerCase())
+
+        if (!action.payload) {
+          return state.products
+        } else if (query) {
+          return product
+        }
+      })
+    },
+  },
   extraReducers(builder) {
     builder.addCase(fetchProducts.pending, (state) => {
       state.loading = true
@@ -64,7 +88,38 @@ const productSlice = createSlice({
       state.products = []
       state.error = action.error.message || 'Could not fetch data'
     })
+
+    builder.addCase(addProduct.pending, (state) => {
+      state.loading = true
+    })
+
+    builder.addCase(addProduct.fulfilled, (state, action) => {
+      state.loading = false
+      state.error = ''
+      state.products = action.payload
+    })
+
+    builder.addCase(addProduct.rejected, (state, action) => {
+      state.loading = false
+      state.products = []
+      state.error = action.error.message || 'Could not add data'
+    })
+
+    builder.addCase(deleteProduct.pending, (state) => {
+      state.loading = true
+    })
+
+    builder.addCase(deleteProduct.fulfilled, (state) => {
+      state.loading = false
+      state.error = ''
+    })
+
+    builder.addCase(deleteProduct.rejected, (state, action) => {
+      state.loading = false
+      state.error = action.error.message || 'Could not delete data'
+    })
   },
 })
 
+export const { filter, search } = productSlice.actions
 export default productSlice.reducer

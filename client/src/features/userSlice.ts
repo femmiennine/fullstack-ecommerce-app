@@ -7,6 +7,7 @@ import {
   ForgetPasswordType,
   ResetPasswordType,
   InitialUserType,
+  AdminLoginType,
 } from '../types'
 import { baseUrl } from '../utils/constants'
 
@@ -35,8 +36,11 @@ export const registerUser = createAsyncThunk('data/registerUser', async (user: U
   try {
     const response = await axios.post(`${baseUrl}api/v1/users/register`, user)
     console.log(response)
+    toast.success(response.data.message)
+    return response.data.data
   } catch (error: any) {
     console.log(error)
+    toast.error(error.response.data.message)
   }
 })
 
@@ -44,8 +48,11 @@ export const loginUser = createAsyncThunk('data/loginUser', async (user: UserLog
   try {
     const response = await axios.post(`${baseUrl}api/v1/users/login`, user)
     console.log(response)
+    toast.success(response.data.message)
+    return response.data.data
   } catch (error: any) {
     console.log(error)
+    toast.error(error.response.data.message)
   }
 })
 
@@ -53,8 +60,11 @@ export const verifyUser = createAsyncThunk('data/verifyUser', async (token: stri
   try {
     const response = await axios.post(`${baseUrl}api/v1/users/verify-user/${token}`, token)
     console.log(response)
+    toast.success(response.data.message)
+    return response.data.data
   } catch (error: any) {
     console.log(error)
+    toast.error(error.response.data.message)
   }
 })
 
@@ -64,8 +74,11 @@ export const forgetPassword = createAsyncThunk(
     try {
       const response = await axios.post(`${baseUrl}api/v1/users/forget-password`, user)
       console.log(response)
+      toast.success(response.data.message)
+      return response.data.data
     } catch (error: any) {
       console.log(error)
+      toast.error(error.response.data.message)
     }
   },
 )
@@ -76,11 +89,24 @@ export const resetPassword = createAsyncThunk(
     try {
       const response = await axios.post(`${baseUrl}api/v1/users/reset-password`, user)
       console.log(response)
+      toast.success(response.data.message)
+      return response.data.data
     } catch (error: any) {
-      console.log(error)
+      toast.error(error.response.data.message)
     }
   },
 )
+
+export const loginAdmin = createAsyncThunk('data/resetPassword', async (admin: AdminLoginType) => {
+  try {
+    const response = await axios.post(`${baseUrl}api/v1/admin/login`, admin)
+    console.log(response)
+    toast.success(response.data.message)
+    return response.data.data
+  } catch (error: any) {
+    toast.error(error.response.data.message)
+  }
+})
 
 export const logoutUser = createAsyncThunk('data/logoutUser', async () => {
   try {

@@ -2,13 +2,14 @@ import styled from 'styled-components'
 import { useFormik } from 'formik'
 import { Toaster, toast } from 'react-hot-toast'
 import { useNavigate } from 'react-router-dom'
-import { registerUser } from '../../services/userServices'
+import { registerUser } from '../../features/userSlice'
 import { UserRegister } from '../../types'
 import { mobile } from '../../utils/responsive'
 import { validationSchema } from '../../validator/registration.schema'
 import register from '../../images/register.jpg'
 import { Navbar } from '../../components'
 import Footer from '../../components/Footer'
+import { useAppDispatch } from '../../app/hook'
 
 const Container = styled.div`
   width: 100vw;
@@ -59,6 +60,7 @@ const Button = styled.button`
 `
 
 const Register = () => {
+  const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const formik = useFormik({
     initialValues: {
@@ -72,14 +74,13 @@ const Register = () => {
     validationSchema,
     onSubmit: async (user: UserRegister, { resetForm }) => {
       try {
-        const response = await registerUser(user)
-        toast.success(response.message)
-        resetForm({})
+        dispatch(registerUser(user))
         setTimeout(() => {
           navigate('/login')
         }, 2000)
       } catch (error: any) {
         toast.error(error.response.data.message)
+        resetForm({})
       }
     },
   })

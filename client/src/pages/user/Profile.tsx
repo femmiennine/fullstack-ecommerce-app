@@ -7,6 +7,7 @@ import userprofile from '../../images/userprofile.jpg'
 import { mobile } from '../../utils/responsive'
 import { Navbar } from '../../components'
 import Footer from '../../components/Footer'
+import { Link } from 'react-router-dom'
 
 axios.defaults.withCredentials = true
 
@@ -87,7 +88,9 @@ const Profile = () => {
             <Input placeholder={user?.email} />
             <Input placeholder={user?.phone} />
             <br />
-            <Button type='submit'>EDIT ACCOUNT</Button>
+            <Link to='/update-profile/:_id'>
+              <Button type='submit'>EDIT ACCOUNT</Button>
+            </Link>
           </Form>
         </Wrapper>
       </Container>

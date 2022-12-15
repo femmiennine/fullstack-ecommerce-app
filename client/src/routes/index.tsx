@@ -42,6 +42,7 @@ const UserRoute = () => {
               <Route path='/create-product' element={<AddProduct />}></Route>
               <Route path='/update-product/:productId' element={<UpdateProduct />}></Route>
               <Route path='/userslist' element={<Users />}></Route>
+              <Route path='/update-profile/:_id' element={<UpdateProduct />}></Route>
             </>
           )}
           <Route path='/productslist' element={<ProductList />}></Route>

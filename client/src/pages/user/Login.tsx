@@ -6,11 +6,12 @@ import { useAppDispatch } from '../../app/hook'
 import { login } from '../../features/userSlice'
 import { validationSchema } from '../../validator/login.schema'
 import { UserLogin } from '../../types/index'
-import { loginUser } from '../../services/userServices'
 import { mobile } from '../../utils/responsive'
 import signin from '../../images/signin.jpg'
 import Footer from '../../components/Footer'
 import { Navbar } from '../../components'
+import axios from 'axios'
+import { baseUrl } from '../../utils/constants'
 
 const Container = styled.div`
   width: 100vw;
@@ -63,8 +64,8 @@ const Line = styled.p`
 `
 
 const Login = () => {
-  const navigate = useNavigate()
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
   const formik = useFormik({
     initialValues: {
       email: '',
@@ -73,10 +74,12 @@ const Login = () => {
     validationSchema,
     onSubmit: async (user: UserLogin, { resetForm }) => {
       try {
-        const response = await loginUser(user)
-        toast.success(response.message)
+        const response = await axios.post(`${baseUrl}api/v1/users/login`, user)
+        toast.success(response.data.message)
         dispatch(login())
-        navigate('/profile')
+        setTimeout(() => {
+          navigate('/profile')
+        }, 2000)
       } catch (error: any) {
         toast.error(error.response.data.message)
         resetForm({})

@@ -6,6 +6,7 @@ import { mobile } from '../../utils/responsive'
 import register from '../../images/register.jpg'
 import { useAppDispatch, useAppSelector } from '../../app/hook'
 import { addProduct } from '../../features/productSlice'
+import Error from '../../pages/Error'
 
 const Container = styled.div`
   width: 100vw;
