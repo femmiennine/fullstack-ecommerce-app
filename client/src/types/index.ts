@@ -7,6 +7,15 @@ export type UserRegister = {
   confirmPassword: string
 }
 
+export type UpdateProfileType = {
+  firstname: string
+  lastname: string
+  email: string
+  phone: string
+  password: string
+  confirmPassword: string
+}
+
 export type VerifyUserType = {
   email: string
 }
@@ -47,7 +56,6 @@ export type ProductType = {
   category: string
   price: string
   quantity: string
-  // shipping: boolean
   inStock: boolean
 }
 

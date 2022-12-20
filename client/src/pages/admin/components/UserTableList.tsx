@@ -5,6 +5,7 @@ import { BlockOutlined, Search } from '@mui/icons-material'
 import { fetchUsers } from '../../../features/userSlice'
 import { UserType } from '../../../types'
 import axios from 'axios'
+import toast from 'react-hot-toast'
 
 const Container = styled.div`
   display: flex;
@@ -79,9 +80,9 @@ const UserTableList = () => {
   const handleUserAccess = async (_id: string) => {
     try {
       const response = await axios.post(`http://localhost:4000/api/v1/admin/user-access/${_id}`)
-      console.log(response)
+      toast.success(response.data.message)
     } catch (error: any) {
-      console.log(error)
+      toast.error(error.response.data.message)
     }
   }
 

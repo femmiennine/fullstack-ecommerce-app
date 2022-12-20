@@ -1,5 +1,5 @@
 import Footer from '../components/Footer'
-import { Announcement, Navbar, Newsletter, Slider } from '../components/index'
+import { Announcement, Navbar, Slider } from '../components/index'
 
 const Home = () => {
   return (
@@ -7,7 +7,6 @@ const Home = () => {
       <Announcement />
       <Navbar />
       <Slider />
-      <Newsletter />
       <Footer />
     </>
   )

@@ -2,16 +2,15 @@ import styled from 'styled-components'
 import { useFormik } from 'formik'
 import { Toaster, toast } from 'react-hot-toast'
 import { useNavigate, useParams } from 'react-router-dom'
-import { registerUser } from '../../features/userSlice'
-import { UserRegister } from '../../types'
+import { UpdateProfileType } from '../../types'
 import { mobile } from '../../utils/responsive'
 import { validationSchema } from '../../validator/registration.schema'
 import register from '../../images/register.jpg'
 import { Navbar } from '../../components'
 import Footer from '../../components/Footer'
-import { useAppDispatch } from '../../app/hook'
 import axios from 'axios'
 import { baseUrl } from '../../utils/constants'
+import { useAppSelector } from '../../app/hook'
 
 const Container = styled.div`
   width: 100vw;
@@ -46,11 +45,6 @@ const Input = styled.input`
   margin: 20px 10px 0px 0px;
   padding: 10px;
 `
-const Agreement = styled.span`
-  font-size: 12px;
-  margin: 20px 0px;
-  color: teal;
-`
 
 const Button = styled.button`
   width: 40%;
@@ -74,13 +68,12 @@ const UpdateProfile = () => {
       confirmPassword: '',
     },
     validationSchema,
-    onSubmit: async (user: UserRegister, { resetForm }) => {
+    onSubmit: async (user: UpdateProfileType, { resetForm }) => {
       try {
         const response = await axios.post(`${baseUrl}api/v1/users/${params._id}`, user)
+        toast.success(response.data.message)
         console.log(response)
-        setTimeout(() => {
-          navigate('/profile')
-        }, 2000)
+        navigate('/profile')
       } catch (error: any) {
         toast.error(error.response.data.message)
         resetForm({})
@@ -143,11 +136,8 @@ const UpdateProfile = () => {
               onChange={formik.handleChange}
               placeholder='Confirm Password'
             />
-            <Agreement>
-              By creating an account, I consent to the processing of my personal data in accordance
-              with the <b>PRIVACY POLICY</b>
-            </Agreement>
-            <Button type='submit'>CREATE</Button>
+            <br />
+            <Button type='submit'>UPDATE</Button>
           </Form>
         </Wrapper>
       </Container>

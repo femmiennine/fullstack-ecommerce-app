@@ -88,7 +88,7 @@ const Profile = () => {
             <Input placeholder={user?.email} />
             <Input placeholder={user?.phone} />
             <br />
-            <Link to='/update-profile/:_id'>
+            <Link to={`/update-profile/${user?._id}`}>
               <Button type='submit'>EDIT ACCOUNT</Button>
             </Link>
           </Form>

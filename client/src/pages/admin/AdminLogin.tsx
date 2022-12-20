@@ -3,13 +3,14 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useFormik } from 'formik'
 import { Toaster, toast } from 'react-hot-toast'
 import { useAppDispatch } from '../../app/hook'
-import { login, loginAdmin } from '../../features/userSlice'
+import { login } from '../../features/userSlice'
 import { validationSchema } from '../../validator/login.schema'
 import { AdminLoginType } from '../../types/index'
 import { mobile } from '../../utils/responsive'
 import admin from '../../images/admin.jpg'
 import Footer from '../../components/Footer'
 import { Navbar } from '../../components'
+import { loginAdmin } from '../../services/adminServices'
 
 const Container = styled.div`
   width: 100vw;
@@ -72,11 +73,10 @@ const AdminLogin = () => {
     validationSchema,
     onSubmit: async (admin: AdminLoginType, { resetForm }) => {
       try {
-        dispatch(loginAdmin(admin))
+        const response = await loginAdmin(admin)
+        toast.success(response.message)
         dispatch(login())
-        setTimeout(() => {
-          navigate('/admin-dashboard')
-        }, 2000)
+        navigate('/admin-dashboard')
       } catch (error: any) {
         toast.error(error.response.data.message)
         resetForm({})

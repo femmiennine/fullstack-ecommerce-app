@@ -92,7 +92,7 @@ const AddProduct = () => {
         dispatch(addProduct(formData))
         setTimeout(() => {
           navigate('/admin-dashboard')
-        }, 2000)
+        }, 1000)
       } catch (error: any) {
         toast.error(error.response.data.message)
         {

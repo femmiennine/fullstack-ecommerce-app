@@ -17,6 +17,7 @@ import UpdateProduct from '../pages/admin/UpdateProduct'
 import Users from '../pages/admin/Users'
 import ProductList from '../pages/product/ProductList'
 import Product from '../pages/product/Product'
+import UpdateProfile from '../pages/user/UpdateProfile'
 
 const UserRoute = () => {
   const isLoggedIn = useAppSelector((state) => state.user.isLoggedIn)
@@ -42,7 +43,7 @@ const UserRoute = () => {
               <Route path='/create-product' element={<AddProduct />}></Route>
               <Route path='/update-product/:productId' element={<UpdateProduct />}></Route>
               <Route path='/userslist' element={<Users />}></Route>
-              <Route path='/update-profile/:_id' element={<UpdateProduct />}></Route>
+              <Route path='/update-profile/:_id' element={<UpdateProfile />}></Route>
             </>
           )}
           <Route path='/productslist' element={<ProductList />}></Route>

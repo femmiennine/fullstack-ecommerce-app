@@ -4,12 +4,12 @@ import { useFormik } from 'formik'
 import { Toaster, toast } from 'react-hot-toast'
 import { validationSchema } from '../../validator/resetPassword.schema'
 import { ResetPasswordType } from '../../types/index'
-import { resetPassword } from '../../features/userSlice'
 import { mobile } from '../../utils/responsive'
 import reset from '../../images/reset.jpg'
 import Footer from '../../components/Footer'
 import { Navbar } from '../../components'
 import { useAppDispatch } from '../../app/hook'
+import { resetPassword } from '../../services/userServices'
 
 const Container = styled.div`
   width: 100vw;
@@ -68,7 +68,8 @@ const ResetPassword = () => {
     validationSchema,
     onSubmit: async (user: ResetPasswordType, { resetForm }) => {
       try {
-        dispatch(resetPassword(user))
+        const response = await resetPassword(user)
+        toast.success(response.message)
         setTimeout(() => {
           navigate('/login')
         }, 2000)

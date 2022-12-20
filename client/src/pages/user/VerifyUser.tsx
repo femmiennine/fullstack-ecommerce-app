@@ -5,8 +5,7 @@ import { mobile } from '../../utils/responsive'
 import verify from '../../images/verify.jpg'
 import { Navbar } from '../../components'
 import Footer from '../../components/Footer'
-import { verifyUser } from '../../features/userSlice'
-import { useAppDispatch } from '../../app/hook'
+import { verifyUser } from '../../services/userServices'
 
 const Container = styled.div`
   width: 100vw;
@@ -41,13 +40,13 @@ const Button = styled.button`
 `
 
 const VerifyUser = () => {
-  const dispatch = useAppDispatch()
   const { token } = useParams()
   const navigate = useNavigate()
 
   const handleClick = async () => {
     try {
-      dispatch(verifyUser(token))
+      const response = await verifyUser(token)
+      toast.success(response.message)
       setTimeout(() => {
         navigate('/login')
       }, 2000)

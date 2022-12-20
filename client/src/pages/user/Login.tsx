@@ -10,8 +10,7 @@ import { mobile } from '../../utils/responsive'
 import signin from '../../images/signin.jpg'
 import Footer from '../../components/Footer'
 import { Navbar } from '../../components'
-import axios from 'axios'
-import { baseUrl } from '../../utils/constants'
+import { loginUser } from '../../services/userServices'
 
 const Container = styled.div`
   width: 100vw;
@@ -74,12 +73,10 @@ const Login = () => {
     validationSchema,
     onSubmit: async (user: UserLogin, { resetForm }) => {
       try {
-        const response = await axios.post(`${baseUrl}api/v1/users/login`, user)
-        toast.success(response.data.message)
+        const response = await loginUser(user)
+        toast.success(response.message)
         dispatch(login())
-        setTimeout(() => {
-          navigate('/profile')
-        }, 2000)
+        navigate('/profile')
       } catch (error: any) {
         toast.error(error.response.data.message)
         resetForm({})

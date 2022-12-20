@@ -81,8 +81,6 @@ const Sidebar = () => {
         withCredentials: true,
       })
       setUser(response.data.user)
-      console.log(response.data.user)
-      return response.data
     } catch (error: any) {
       toast.error(error.response.data.message)
     }
